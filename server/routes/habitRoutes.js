@@ -26,10 +26,10 @@ habitRouter.delete('/delete/:habitId', protect, deleteHabit);
 // Archive a habit
 habitRouter.put('/archive/:habitId', protect, archiveHabit);
 
-// Mark a habit as completed (increment streak)
+// Mark a habit as completed (increment streak
 habitRouter.put('/complete/:habitId', protect, markHabitComplete);
 
-// Get the total streak (average of all habit streaks)
+// Get the total streak (average of all habit streaks).
 habitRouter.get('/total-streak', protect, getTotalStreak);
 
 habitRouter.get('/all-habits',protect, getAllHabits)
