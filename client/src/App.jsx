@@ -1,30 +1,46 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// src/App.jsx
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import VerifyOtp from "./pages/VerifyOtp";
 import Dashboard from "./pages/Dashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Landing from "./pages/Landing";
-import React from "react";
+import PrivateRoute from "./routes/PrivateRoute";
+import Home from "./pages/Home";
+import { ToastContainer } from "react-toastify";
+import GlobalLoader from "./components/GlobalLoader";
+import { useLoader } from "./context/loaderContext";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
-function App() {
+const App = () => {
+  const { setLoading } = useLoader();
+  const location = useLocation();
+
+  useEffect(() => {
+    setLoading(true);
+    const timeout = setTimeout(() => setLoading(false), 300); // simulate slight loading effect
+    return () => clearTimeout(timeout);
+  }, [location.pathname]);
+
   return (
-    <Router>
+    <>
+      <GlobalLoader />
       <Routes>
-        
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/verify-otp" element={<VerifyOtp />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={
-          <ProtectedRoute>
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path='/' element={<Home />} />
+      <Route
+        path="/dashboard"
+        element={
+          <PrivateRoute>
             <Dashboard />
-          </ProtectedRoute>
-        } />
-        <Route path="/" element={<Landing />} />
-      </Routes>
-    </Router>
+          </PrivateRoute>
+        }
+      />
+    </Routes>
+      <ToastContainer position="top-center" />
+    </>
   );
-}
+};
 
 export default App;

@@ -13,4 +13,13 @@ router.get("/protected", protect, (req, res) => {
   res.json({ message: `Hello ${req.user.name}, you are authenticated!` });
 });
 
+// GET /me - fetch logged-in user's data
+router.get("/me", protect, (req, res) => {
+  res.status(200).json({
+    success: true,
+    user: req.user, // this comes from protect middleware
+  });
+});
+
+
 export default router;
