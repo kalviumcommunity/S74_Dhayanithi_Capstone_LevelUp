@@ -14,6 +14,7 @@ export const protect = async (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+    // Check if the token has a valid userId and decode it
     const user = await userModel.findOne({ userId: decoded.userId });
 
     if (!user) {
@@ -23,7 +24,7 @@ export const protect = async (req, res, next) => {
       });
     }
 
-    req.user = user;
+    req.user = user;  // Attach the user to the request object
     next();
   } catch (error) {
     console.error("Auth error:", error.message);
