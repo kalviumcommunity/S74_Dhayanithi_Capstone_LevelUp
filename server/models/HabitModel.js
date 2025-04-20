@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const habitSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "User ",
         required: true
     },
     title: {
@@ -44,7 +44,7 @@ const habitSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    isArchived: {
+    isArchived: {  // Updated field for archiving
         type: Boolean,
         default: false
     },

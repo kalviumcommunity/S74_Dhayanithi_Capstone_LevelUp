@@ -77,21 +77,23 @@ export const deleteHabit = async (req, res) => {
 export const archiveHabit = async (req, res) => {
     try {
         const { habitId } = req.params;
+        const { unarchive = false } = req.body || {};
 
         const habit = await HabitModel.findOneAndUpdate(
             { _id: habitId, userId: req.user._id },
-            { isArchived: true },
+            { isArchived: !unarchive },
             { new: true }
         );
 
         if (!habit) return res.status(404).json({ message: "Habit not found" });
 
-        res.status(200).json({ message: "Habit archived", habit });
+        res.status(200).json({ message: unarchive ? "Habit unarchived" : "Habit archived", habit });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Failed to archive habit" });
+        res.status(500).json({ message: "Failed to update archive status" });
     }
 };
+  
 
 // Mark a habit as completed (one click = one repetition)
 export const markHabitComplete = async (req, res) => {

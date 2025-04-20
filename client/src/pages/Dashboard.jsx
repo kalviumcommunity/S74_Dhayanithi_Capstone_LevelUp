@@ -14,7 +14,7 @@ const Dashboard = () => {
 
   const fetchHabits = async () => {
     try {
-      const res = await axios.get('/api/habits'); // adjust endpoint
+      const res = await axios.get('/habits/all-habits'); // adjust endpoint
       const habits = res.data.habits || [];
       setHabits(habits.slice(0, 3));
       if (habits.length > 0) {
@@ -27,7 +27,7 @@ const Dashboard = () => {
 
   const fetchUser = async () => {
     try {
-      const res = await axios.get('/user/profile'); // This hits: http://localhost:5454/api/user/profile
+      const res = await axios.get('/auth/profile'); // This hits: http://localhost:5454/api/user/profile
       if (res.data?.user) {
         setUser(res.data.user);
       } else {
@@ -40,7 +40,7 @@ const Dashboard = () => {
   
 
   const fetchStreak = async () => {
-    const res = await axios.get('/api/habits/streak');
+    const res = await axios.get('/habits/total-streak');
     setStreak(res.data.totalStreak);
   };
 

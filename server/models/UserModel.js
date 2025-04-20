@@ -1,30 +1,30 @@
-import mongoose, { trusted } from "mongoose";
+import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-    name:{
-        type:String,
-        required:true
+    name: {
+        type: String,
+        required: true
     },
     userId: {
-        type:String,
-        required:true,
-        unique:true
-    },
-    email:{
-        type:String,
-        required:true,
-        unique:true
-    },
-    phone:{
         type: String,
         required: true,
-        unique: true
+        unique: true  // Ensures userId is unique
     },
-    password:{
-        type:String,
-        required:true
+    email: {
+        type: String,
+        required: true,
+        unique: true  // Ensures email is unique
     },
-    
-}, { timestamps: true })
-const userModel = mongoose.model("User",userSchema)
-export default userModel
+    phone: {
+        type: String,
+        required: true,
+        unique: true  // Ensures phone is unique
+    },
+    password: {
+        type: String,
+        required: true
+    }
+}, { timestamps: true });
+
+const userModel = mongoose.model("User", userSchema);
+export default userModel;
