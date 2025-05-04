@@ -11,6 +11,15 @@ const habitSchema = new mongoose.Schema({
         required: true
     },
     description: String,
+    category: {
+        type: String,
+        enum: ["health", "fitness", "learning", "productivity", "mindfulness", "social", "finance", "other"],
+        default: "other"
+    },
+    motivation: {
+        type: String,
+        default: ""
+    },
     frequency: {
         type: String,
         enum: ["daily", "weekly", "monthly"],
@@ -19,6 +28,11 @@ const habitSchema = new mongoose.Schema({
     targetPerDay: {
         type: Number,
         default: 1
+    },
+    preferredTime: {
+        type: String,
+        enum: ["morning", "afternoon", "evening", "anytime"],
+        default: "anytime"
     },
     completedToday: {
         type: Number,
@@ -44,7 +58,7 @@ const habitSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    isArchived: {  // Updated field for archiving
+    isArchived: {
         type: Boolean,
         default: false
     },

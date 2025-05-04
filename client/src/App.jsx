@@ -1,10 +1,10 @@
-// src/App.jsx
 import React, { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+import axios from './services/axios';
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
-import MyHabits from "./pages/MyHabits"; // ⬅️ New import
+import MyHabits from "./pages/MyHabits";
 import PrivateRoute from "./routes/PrivateRoute";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
@@ -18,11 +18,28 @@ const App = () => {
   const location = useLocation();
   const { user } = useAuth();
 
+  // 🌐 Loader on route change
   useEffect(() => {
     setLoading(true);
     const timeout = setTimeout(() => setLoading(false), 300);
     return () => clearTimeout(timeout);
   }, [location.pathname]);
+
+  // 🔁 Daily Reset useEffect
+  useEffect(() => {
+    const lastReset = localStorage.getItem("lastReset");
+    const today = new Date().toISOString().split('T')[0];
+
+    if (lastReset !== today) {
+      axios
+        .put('/habits/daily-reset', {}, { withCredentials: true })
+        .then(() => {
+          localStorage.setItem("lastReset", today);
+          console.log("✅ Daily reset done");
+        })
+        .catch((err) => console.log("❌ Reset failed", err));
+    }
+  }, []);
 
   return (
     <>
@@ -40,7 +57,6 @@ const App = () => {
             </PrivateRoute>
           }
         />
-        {/* ✅ New MyHabits route (Protected) */}
         <Route
           path="/myhabits"
           element={

@@ -1,5 +1,3 @@
-// routes/habitRoutes.js
-
 import express from 'express';
 import {
   createHabit,
@@ -8,8 +6,12 @@ import {
   archiveHabit,
   markHabitComplete,
   getTotalStreak,
-  getAllHabits
+  getAllHabits,
+  dailyResetHabits,
+  getHabitsByCategory,
+  getHabitsByTime
 } from '../controllers/habitController.js';
+
 import { protect } from '../middlewares/authMiddleware.js'; // Protecting the routes with authentication
 
 const habitRouter = express.Router();
@@ -26,11 +28,20 @@ habitRouter.delete('/delete/:habitId', protect, deleteHabit);
 // Archive a habit
 habitRouter.put('/archive/:habitId', protect, archiveHabit);
 
-// Mark a habit as completed (increment streak
+// Mark a habit as completed (increment streak)
 habitRouter.put('/complete/:habitId', protect, markHabitComplete);
 
-// Get the total streak (average of all habit streaks).
+// Get the total streak (average of all habit streaks)
 habitRouter.get('/total-streak', protect, getTotalStreak);
 
-habitRouter.get('/all-habits',protect, getAllHabits)
+// Get all habits
+habitRouter.get('/all-habits', protect, getAllHabits);
+
+// Daily reset for habits
+habitRouter.put('/daily-reset', protect, dailyResetHabits);
+
+// New routes for category and time filtering
+habitRouter.get('/category/:category', protect, getHabitsByCategory);
+habitRouter.get('/time/:timeOfDay', protect, getHabitsByTime);
+
 export default habitRouter;
