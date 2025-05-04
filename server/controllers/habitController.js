@@ -1,5 +1,3 @@
-// controllers/habitController.js
-
 import HabitModel from "../models/HabitModel.js";
 import mongoose from "mongoose";
 
@@ -14,15 +12,29 @@ const getBadgeFromStreak = (streak) => {
 // Create a new habit
 export const createHabit = async (req, res) => {
     try {
-        const { title, description, frequency, targetPerDay } = req.body;
+        const { 
+            title, 
+            description, 
+            category, 
+            motivation, 
+            frequency, 
+            targetPerDay,
+            preferredTime,
+            startDate 
+        } = req.body;
+        
         const userId = req.user._id;
 
         const newHabit = new HabitModel({
             userId,
             title,
             description,
+            category,
+            motivation,
             frequency,
             targetPerDay,
+            preferredTime,
+            startDate: startDate || Date.now(),
         });
 
         await newHabit.save();
@@ -93,7 +105,6 @@ export const archiveHabit = async (req, res) => {
         res.status(500).json({ message: "Failed to update archive status" });
     }
 };
-  
 
 // Mark a habit as completed (one click = one repetition)
 export const markHabitComplete = async (req, res) => {
@@ -159,6 +170,40 @@ export const markHabitComplete = async (req, res) => {
     }
 };
 
+// to reset habit
+export const dailyResetHabits = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const today = new Date().toISOString().split('T')[0];
+
+        const habits = await HabitModel.find({ userId });
+
+        for (let habit of habits) {
+            const lastChecked = habit.lastCheckedDate
+                ? new Date(habit.lastCheckedDate).toISOString().split('T')[0]
+                : null;
+
+            if (lastChecked !== today) {
+                // Apply penalty if target wasn't met yesterday
+                if (habit.completedToday < habit.targetPerDay) {
+                    habit.currentStreak = Math.max(habit.currentStreak - 5, 0);
+                    habit.missedCount++;
+                }
+
+                // Reset for today
+                habit.completedToday = 0;
+                habit.lastCheckedDate = new Date();
+            }
+
+            await habit.save();
+        }
+
+        res.status(200).json({ message: "Daily reset done successfully" });
+    } catch (error) {
+        console.error("Reset error:", error);
+        res.status(500).json({ message: "Daily reset failed" });
+    }
+};
 
 // Get total streak (average of all habit streaks)
 export const getTotalStreak = async (req, res) => {
@@ -209,6 +254,50 @@ export const getAllHabits = async (req, res) => {
     }
 };
 
+// Filter habits by category
+export const getHabitsByCategory = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const { category } = req.params;
+        
+        // Validate the category
+        const validCategories = ["health", "fitness", "learning", "productivity", "mindfulness", "social", "finance", "other"];
+        if (!validCategories.includes(category)) {
+            return res.status(400).json({ message: "Invalid category" });
+        }
+        
+        const habits = await HabitModel.find({ userId, category });
+        
+        res.status(200).json({
+            message: `Habits in ${category} category retrieved successfully`,
+            habits,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to fetch habits by category" });
+    }
+};
 
-
-
+// Get habits by time of day
+export const getHabitsByTime = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const { timeOfDay } = req.params;
+        
+        // Validate the time of day
+        const validTimes = ["morning", "afternoon", "evening", "anytime"];
+        if (!validTimes.includes(timeOfDay)) {
+            return res.status(400).json({ message: "Invalid time of day" });
+        }
+        
+        const habits = await HabitModel.find({ userId, preferredTime: timeOfDay });
+        
+        res.status(200).json({
+            message: `${timeOfDay} habits retrieved successfully`,
+            habits,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to fetch habits by time" });
+    }
+};
