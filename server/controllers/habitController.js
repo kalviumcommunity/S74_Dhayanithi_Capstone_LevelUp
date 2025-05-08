@@ -9,20 +9,24 @@ const getBadgeFromStreak = (streak) => {
     return "none";
 };
 
+// Utility: Format date as YYYY-MM-DD
+const formatDate = (date) => {
+    return date.toISOString().split("T")[0];
+};
+
 // Create a new habit
 export const createHabit = async (req, res) => {
     try {
-        const { 
-            title, 
-            description, 
-            category, 
-            motivation, 
-            frequency, 
+        const {
+            title,
+            description,
+            category,
+            motivation,
+            frequency,
             targetPerDay,
             preferredTime,
-            startDate 
+            startDate
         } = req.body;
-        
         const userId = req.user._id;
 
         const newHabit = new HabitModel({
@@ -58,7 +62,6 @@ export const updateHabit = async (req, res) => {
         );
 
         if (!habit) return res.status(404).json({ message: "Habit not found" });
-
         res.status(200).json({ message: "Habit updated", habit });
     } catch (error) {
         console.error(error);
@@ -77,7 +80,6 @@ export const deleteHabit = async (req, res) => {
         });
 
         if (!deletedHabit) return res.status(404).json({ message: "Habit not found" });
-
         res.status(200).json({ message: "Habit deleted", habit: deletedHabit });
     } catch (error) {
         console.error(error);
@@ -85,11 +87,11 @@ export const deleteHabit = async (req, res) => {
     }
 };
 
-// Archive a habit
+// Archive or unarchive a habit
 export const archiveHabit = async (req, res) => {
     try {
         const { habitId } = req.params;
-        const { unarchive = false } = req.body || {};
+        const { unarchive = false } = req.body;
 
         const habit = await HabitModel.findOneAndUpdate(
             { _id: habitId, userId: req.user._id },
@@ -98,8 +100,10 @@ export const archiveHabit = async (req, res) => {
         );
 
         if (!habit) return res.status(404).json({ message: "Habit not found" });
-
-        res.status(200).json({ message: unarchive ? "Habit unarchived" : "Habit archived", habit });
+        res.status(200).json({
+            message: unarchive ? "Habit unarchived" : "Habit archived",
+            habit
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Failed to update archive status" });
@@ -110,15 +114,15 @@ export const archiveHabit = async (req, res) => {
 export const markHabitComplete = async (req, res) => {
     try {
         const { habitId } = req.params;
-        const userId = req.user._id; // Coming from auth middleware
+        const userId = req.user._id;
 
         const habit = await HabitModel.findOne({ _id: habitId, userId });
         if (!habit) return res.status(404).json({ message: "Habit not found" });
 
-        const today = new Date().toISOString().split('T')[0];
-        const lastChecked = habit.lastCheckedDate ? new Date(habit.lastCheckedDate).toISOString().split('T')[0] : null;
+        const today = formatDate(new Date());
+        const lastChecked = habit.lastCheckedDate ? formatDate(new Date(habit.lastCheckedDate)) : null;
 
-        // Check if it's a new day to reset completedToday counter
+        // Reset for new day
         if (lastChecked && lastChecked !== today) {
             if (habit.completedToday < habit.targetPerDay) {
                 habit.currentStreak = Math.max(habit.currentStreak - 5, 0);
@@ -133,36 +137,40 @@ export const markHabitComplete = async (req, res) => {
             return res.status(200).json({ message: "Target already met for today", habit });
         }
 
-        // Mark one repetition done
+        // Increment today's count
         habit.completedToday++;
 
-        // If target met, update streak and lastCompleted
+        // Check if daily goal met
         if (habit.completedToday >= habit.targetPerDay) {
             habit.currentStreak++;
             habit.lastCompleted = new Date();
         }
 
-        // Push today's progress into history
-        const historyTodayIndex = habit.history.findIndex(entry => entry.date === today);
-        if (historyTodayIndex !== -1) {
-            habit.history[historyTodayIndex].completedCount++;
+        // Update history
+        const historyEntry = habit.history.find(entry => entry.date === today);
+        if (historyEntry) {
+            historyEntry.completedCount++;
         } else {
             habit.history.push({ date: today, completedCount: 1 });
         }
 
+        // Update timestamp
         habit.lastCheckedDate = new Date();
 
-        // Update badge
+        // Assign badge
         habit.badge = getBadgeFromStreak(habit.currentStreak);
 
-        // Calculate progress percentage
+        // Calculate progress
         const progressPercentage = (habit.completedToday / habit.targetPerDay) * 100;
 
+        // Save to DB
         await habit.save();
+
+        // Return response
         res.status(200).json({
             message: "Habit updated",
             habit,
-            progressPercentage: progressPercentage.toFixed(2)  // Adding the progress percentage
+            progressPercentage: progressPercentage.toFixed(2)
         });
     } catch (error) {
         console.error(error);
@@ -170,27 +178,25 @@ export const markHabitComplete = async (req, res) => {
     }
 };
 
-// to reset habit
+// Daily reset for all habits (run via cron job)
 export const dailyResetHabits = async (req, res) => {
     try {
         const userId = req.user._id;
-        const today = new Date().toISOString().split('T')[0];
+        const today = formatDate(new Date());
 
         const habits = await HabitModel.find({ userId });
 
         for (let habit of habits) {
-            const lastChecked = habit.lastCheckedDate
-                ? new Date(habit.lastCheckedDate).toISOString().split('T')[0]
-                : null;
+            const lastChecked = habit.lastCheckedDate ? formatDate(new Date(habit.lastCheckedDate)) : null;
 
             if (lastChecked !== today) {
-                // Apply penalty if target wasn't met yesterday
+                // Apply penalty if yesterday's target wasn't met
                 if (habit.completedToday < habit.targetPerDay) {
                     habit.currentStreak = Math.max(habit.currentStreak - 5, 0);
                     habit.missedCount++;
                 }
 
-                // Reset for today
+                // Reset counters
                 habit.completedToday = 0;
                 habit.lastCheckedDate = new Date();
             }
@@ -205,24 +211,25 @@ export const dailyResetHabits = async (req, res) => {
     }
 };
 
-// Get total streak (average of all habit streaks)
+// Get total average streak across all habits
 export const getTotalStreak = async (req, res) => {
     try {
         const userId = req.user._id;
         const habits = await HabitModel.find({ userId });
 
-        if (habits.length === 0) return res.status(200).json({ totalStreak: 0 });
+        if (habits.length === 0) {
+            return res.status(200).json({ totalStreak: 0, averageProgress: 0 });
+        }
 
         const totalStreak = habits.reduce((sum, h) => sum + h.currentStreak, 0);
         const averageStreak = Math.floor(totalStreak / habits.length);
 
-        // Calculate overall progress (average of all habit progress)
         const totalProgress = habits.reduce((sum, h) => sum + (h.completedToday / h.targetPerDay), 0);
-        const averageProgress = (totalProgress / habits.length) * 100;
+        const averageProgress = ((totalProgress / habits.length) * 100).toFixed(2);
 
         res.status(200).json({
             totalStreak: averageStreak,
-            averageProgress: averageProgress.toFixed(2) // Percentage progress across all habits
+            averageProgress
         });
     } catch (error) {
         console.error(error);
@@ -230,24 +237,17 @@ export const getTotalStreak = async (req, res) => {
     }
 };
 
-// Get all habits of a particular user
+// Get all habits
 export const getAllHabits = async (req, res) => {
     try {
-        const userId = req.user._id;  // Extract userId from the authenticated user
-
-        // Fetch all habits for the user from the database
+        const userId = req.user._id;
         const habits = await HabitModel.find({ userId });
 
-        // If no habits found, return a message indicating that
         if (habits.length === 0) {
             return res.status(404).json({ message: "No habits found for this user" });
         }
 
-        // Return the list of habits
-        res.status(200).json({
-            message: "Habits retrieved successfully",
-            habits,
-        });
+        res.status(200).json({ message: "Habits retrieved successfully", habits });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Failed to fetch habits" });
@@ -259,15 +259,13 @@ export const getHabitsByCategory = async (req, res) => {
     try {
         const userId = req.user._id;
         const { category } = req.params;
-        
-        // Validate the category
+
         const validCategories = ["health", "fitness", "learning", "productivity", "mindfulness", "social", "finance", "other"];
         if (!validCategories.includes(category)) {
             return res.status(400).json({ message: "Invalid category" });
         }
-        
+
         const habits = await HabitModel.find({ userId, category });
-        
         res.status(200).json({
             message: `Habits in ${category} category retrieved successfully`,
             habits,
@@ -283,15 +281,13 @@ export const getHabitsByTime = async (req, res) => {
     try {
         const userId = req.user._id;
         const { timeOfDay } = req.params;
-        
-        // Validate the time of day
+
         const validTimes = ["morning", "afternoon", "evening", "anytime"];
         if (!validTimes.includes(timeOfDay)) {
             return res.status(400).json({ message: "Invalid time of day" });
         }
-        
+
         const habits = await HabitModel.find({ userId, preferredTime: timeOfDay });
-        
         res.status(200).json({
             message: `${timeOfDay} habits retrieved successfully`,
             habits,
