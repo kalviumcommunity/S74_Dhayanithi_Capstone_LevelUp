@@ -28,6 +28,7 @@ export const createHabit = async (req, res) => {
             preferredTime,
             startDate
         } = req.body;
+        
         const userId = req.user._id;
 
         const newHabit = new HabitModel({
