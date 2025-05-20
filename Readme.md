@@ -164,3 +164,6 @@ LevelUp is a **habit-tracking and personal development platform** designed to he
 Stay tuned! This is just the beginning of **LevelUp** – the platform that makes self-growth fun, social, and smart.
 
 > “You don’t need to be extreme. Just consistent.” – LevelUp
+
+
+Backend Deployed Link - **https://s74-dhayanithi-capstone-levelup.onrender.com/**
