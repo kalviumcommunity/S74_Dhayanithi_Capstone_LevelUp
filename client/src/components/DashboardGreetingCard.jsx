@@ -11,7 +11,7 @@ const DashboardGreetingCard = ({
 }) => {
   const [greeting, setGreeting] = useState('');
   
-  // Calculate percentage safely
+  // Calculate percentage safely 
   const percentageComplete = React.useMemo(() => {
     if (typeof progress === 'number') {
       return Math.min(Math.max(Math.round(progress * 100), 0), 100);
