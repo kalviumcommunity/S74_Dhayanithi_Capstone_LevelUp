@@ -53,7 +53,7 @@ export const createHabit = async (req, res) => {
 
 // Update a habit
 export const updateHabit = async (req, res) => {
-    try {
+    try { 
         const { habitId } = req.params;
         const updates = req.body;
 
@@ -73,7 +73,7 @@ export const updateHabit = async (req, res) => {
 
 // Delete a habit
 export const deleteHabit = async (req, res) => {
-    try {
+    try { 
         const { habitId } = req.params;
 
         const deletedHabit = await HabitModel.findOneAndDelete({

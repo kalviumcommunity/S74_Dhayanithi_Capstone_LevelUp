@@ -97,7 +97,7 @@ const HabitCard = ({ habit, refresh }) => {
   // Calculate progress percentage
   const progressPercentage = (habit.completedToday / habit.targetPerDay) * 100;
   
-  // Format date for display
+  // Format date for display 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { 
