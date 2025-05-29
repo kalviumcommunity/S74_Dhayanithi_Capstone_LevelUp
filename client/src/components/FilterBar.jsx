@@ -12,9 +12,9 @@ const FilterBar = ({ filterType, setFilterType }) => {
     { value: 'streak', label: 'Highest Streak', icon: '🔥', description: 'Show habits with highest streaks first' },
     { value: 'category', label: 'By Category', icon: '📚', description: 'Group habits by category' }
   ];
-
+ 
   // Filter categories
-  const categories = [
+  const categories = [ 
     { value: 'all', label: 'All Categories', icon: '✨' },
     { value: 'health', label: 'Health', icon: '❤️' },
     { value: 'fitness', label: 'Fitness', icon: '💪' },

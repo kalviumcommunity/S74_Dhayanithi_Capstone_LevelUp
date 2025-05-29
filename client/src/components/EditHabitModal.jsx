@@ -11,7 +11,7 @@ const EditHabitModal = ({ habit, onClose, refresh }) => {
     targetPerDay: habit.targetPerDay || 1,
     preferredTime: habit.preferredTime || 'anytime',
     startDate: habit.startDate ? new Date(habit.startDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
-  });
+  }); 
 
   const handleChange = (e) => {
     const value = e.target.type === 'number' ? Number(e.target.value) : e.target.value;

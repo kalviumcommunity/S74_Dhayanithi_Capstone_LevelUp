@@ -13,7 +13,7 @@ const HabitCard = ({ habit, refresh }) => {
   // Function to get category icon
   const getCategoryIcon = (category) => {
     switch (category) {
-      case 'health':
+      case 'health': 
         return '❤️';
       case 'fitness':
         return '💪';
