@@ -58,88 +58,85 @@ const DashboardGreetingCard = ({
   });
 
   return (
-    <div className="bg-gradient-to-r from-indigo-600 to-purple-700 text-white rounded-2xl overflow-hidden shadow-xl">
-      <div className="p-6">
-        {/* Greeting and Badge */}
-        <div className="flex justify-between items-start">
-          <div>
-            <h2 className="text-3xl font-bold mb-1">{greeting}, {name}!</h2>
-            <p className="text-indigo-100 text-sm">Let's make today count and smash those goals! 🚀</p>
-          </div>
-          <div className="bg-white bg-opacity-30 rounded-xl p-3 shadow-md">
-            <span className="text-2xl">{getBadgeIcon(badge)}</span>
-          </div>
-        </div>
-
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-          {/* Streak */}
-          <div className="bg-white bg-opacity-10 p-5 rounded-xl flex items-center shadow-sm backdrop-blur-sm">
-            <div className="w-12 h-12 rounded-full bg-white bg-opacity-30 flex items-center justify-center mr-4">
-              <span className="text-2xl">🔥</span>
-            </div>
-            <div>
-              <p className="text-lg font-semibold text-purple-900 opacity-90">Current Streak</p>
-              <p className="text-lg text-purple-900 font-bold">{streak} days</p>
-            </div>
-          </div>
-
-          {/* Badge */}
-          <div className="bg-white bg-opacity-10 p-5 rounded-xl flex items-center shadow-sm backdrop-blur-sm">
-            <div className="w-12 h-12 rounded-full bg-white bg-opacity-30 flex items-center justify-center mr-4">
-              <span className="text-2xl">{getBadgeIcon(badge)}</span>
-            </div>
-            <div>
-              <p className="text-lg font-semibold text-purple-900 opacity-90">Current Badge</p>
-              <p className="text-lg text-purple-900 font-bold">{badge}</p>
-            </div>
-          </div>
-
-          {/* Progress */}
-          <div className="bg-white bg-opacity-10 p-5 rounded-xl shadow-sm backdrop-blur-sm">
-            <div className="flex justify-between items-center mb-2">
-              <p className="text-lg font-semibold text-purple-900  opacity-90">Today's Progress</p>
-              <div className="flex items-center">
-                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-indigo-600 font-bold mr-1 shadow-md">
-                  {percentageComplete}
-                </div>
-                <span className="text-white font-medium">%</span>
-              </div>
-            </div>
-            <div className="w-full bg-white bg-opacity-30 rounded-full h-3 mb-2">
-              <div 
-                className={`h-3 rounded-full transition-all duration-300 ease-in-out ${
-                  percentageComplete === 100
-                    ? 'bg-green-400'
-                    : percentageComplete >= 50
-                    ? 'bg-yellow-400'
-                    : 'bg-red-400'
-                }`}
-                style={{ width: `${percentageComplete}%` }}
-              ></div>
-            </div>
-            <p className="text-sm mt-2 text-puple-900 opacity-80">
-              {completedToday}/{totalHabits} habits completed
-              {remainingHabits > 0 && (
-                <span> • {remainingHabits} remaining</span>
-              )}
-            </p>
-          </div>
-        </div>
+    <div className="bg-white text-gray-800 rounded-xl border border-gray-200 shadow-md">
+  <div className="p-6">
+    {/* Greeting and Badge */}
+    <div className="flex justify-between items-start">
+      <div>
+        <h2 className="text-2xl font-bold mb-1">{greeting}, {name}!</h2>
+        <p className="text-sm text-gray-500">Stay focused and hit your goals! 💪</p>
       </div>
-              
-      {/* Footer */}
-      <div className="bg-indigo-800 p-4 flex justify-between items-center">
-        <p className="text-sm text-indigo-100">
-          {remainingHabits === 0 
-            ? "Amazing! You've completed all your habits for today! 🎉" 
-            : `You have ${remainingHabits} habit${remainingHabits === 1 ? '' : 's'} left for today`}
-        </p>
-        <div className="text-xs bg-indigo-900 py-1 px-4 rounded-full text-white shadow-md">
-          {formattedDate}
-        </div>
+      <div className="bg-gray-100 rounded-lg p-2">
+        <span className="text-2xl">{getBadgeIcon(badge)}</span>
       </div>
     </div>
+
+    {/* Stats Cards */}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+      {/* Streak */}
+      <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 flex items-center space-x-4">
+        <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-xl">🔥</div>
+        <div>
+          <p className="text-sm text-gray-500">Current Streak</p>
+          <p className="text-base font-semibold">{streak} days</p>
+        </div>
+      </div>
+
+      {/* Badge */}
+      <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 flex items-center space-x-4">
+        <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-xl">{getBadgeIcon(badge)}</div>
+        <div>
+          <p className="text-sm text-gray-500">Current Badge</p>
+          <p className="text-base font-semibold capitalize">{badge}</p>
+        </div>
+      </div>
+
+      {/* Progress */}
+      <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+        <div className="flex justify-between items-center mb-2">
+          <p className="text-sm text-gray-500">Today's Progress</p>
+          <div className="flex items-center">
+            <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center font-bold text-sm mr-1">
+              {percentageComplete}
+            </div>
+            <span className="text-sm">%</span>
+          </div>
+        </div>
+        <div className="w-full bg-gray-200 rounded-full h-2">
+          <div
+            className={`h-2 rounded-full transition-all duration-300 ${
+              percentageComplete === 100
+                ? 'bg-green-500'
+                : percentageComplete >= 50
+                ? 'bg-yellow-400'
+                : 'bg-red-400'
+            }`}
+            style={{ width: `${percentageComplete}%` }}
+          ></div>
+        </div>
+        <p className="text-xs text-gray-500 mt-2">
+          {completedToday}/{totalHabits} habits completed
+          {remainingHabits > 0 && (
+            <span> • {remainingHabits} remaining</span>
+          )}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  {/* Footer */}
+  <div className="bg-gray-100 border-t border-gray-200 px-4 py-3 flex justify-between items-center rounded-b-xl">
+    <p className="text-sm text-gray-600">
+      {remainingHabits === 0
+        ? "Amazing! You've completed all your habits for today! 🎉"
+        : `You have ${remainingHabits} habit${remainingHabits === 1 ? '' : 's'} left for today`}
+    </p>
+    <div className="text-xs bg-white border border-gray-300 py-1 px-3 rounded-full text-gray-700 shadow-sm">
+      {formattedDate}
+    </div>
+  </div>
+</div>
+
   );
 };
 
