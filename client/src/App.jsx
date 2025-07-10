@@ -6,7 +6,7 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import MyHabits from "./pages/MyHabits";
 import PrivateRoute from "./routes/PrivateRoute";
-import Home from "./pages/Home";
+import LandingPage from "./pages/LandingPage";
 import Navbar from "./components/Navbar";
 import { ToastContainer } from "react-toastify";
 import GlobalLoader from "./components/GlobalLoader";
@@ -48,7 +48,7 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<LandingPage />} />
         <Route
           path="/dashboard"
           element={
