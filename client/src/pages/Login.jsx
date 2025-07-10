@@ -1,7 +1,8 @@
 // src/pages/Login.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../services/axios";
+// import axios from "../services/axios";
+import axios from "axios";
 import { useAuth } from "../context/authContext.jsx";
 import { EyeIcon, EyeOffIcon } from "lucide-react"; // make sure you have lucide-react or use any icon lib
 
