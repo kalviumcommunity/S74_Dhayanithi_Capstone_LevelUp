@@ -13,7 +13,7 @@ const ArchivedHabits = ({ habits, refresh }) => {
 
   return (
     <div className="mt-8">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800">Archived Habits</h2>
+      <h2 className="text-2xl font-bold mb-4 text-gray-800">Archived Habits</h2> 
       <div className="grid gap-4">
         {habits.map(habit => (
           <div key={habit._id} className="bg-white border border-gray-200 p-5 rounded-2xl shadow-sm hover:shadow-md transition">

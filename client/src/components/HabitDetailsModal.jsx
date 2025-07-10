@@ -14,7 +14,7 @@ const HabitDetailsModal = ({ habit, onClose, refresh, onEdit, onArchive, onDelet
   const [notes, setNotes] = useState('');
   const [isAddingNote, setIsAddingNote] = useState(false);
   const [habitNotes, setHabitNotes] = useState([]);
-
+ 
   // Tabs management
   const [activeTab, setActiveTab] = useState('overview');
 
