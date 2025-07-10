@@ -19,7 +19,7 @@ function Login() {
     setError("");
 
     try {
-      const res = await axios.post("/auth/login", {
+      const res = await axios.post("https://s74-dhayanithi-capstone-levelup.onrender.com/api/auth/login", {
         userOrEmail: identifier,
         password,
       });
