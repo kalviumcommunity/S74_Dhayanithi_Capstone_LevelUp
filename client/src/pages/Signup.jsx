@@ -3,10 +3,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
-import API from "../services/axios";
+// import API from "../services/axios";
 import { toast } from "react-toastify";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 function Signup() {
   const [name, setName] = useState("");
@@ -20,12 +21,14 @@ function Signup() {
   const navigate = useNavigate();
   const { setUser } = useAuth();
 
+  const isProduction = process.env.NODE_ENV === "production";
+  const backendURL = isProduction ? process.env.VITE_BACKEND_URL : "http://localhost:5454";
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
     try {
-      const response = await API.post("/auth/register", {
+      const response = await axios.post( `${backendURL}/api/auth/register`, {
         name,
         userId,
         email,

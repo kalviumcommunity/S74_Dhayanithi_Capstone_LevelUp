@@ -10,11 +10,13 @@ import { connectDB } from "./config/db.js";
 dotenv.config();
 const app = express();
 
+const isProduction = process.env.NODE_ENV === "production";
+
 // 🌐 Middleware
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: process.env.CLIENT_URL, // Frontend URL
+  origin: isProduction ? process.env.CLIENT_URL : "http://localhost:5173", // Frontend URL
   credentials: true
 }));
 

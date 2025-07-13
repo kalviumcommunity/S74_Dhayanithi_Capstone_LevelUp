@@ -11,6 +11,9 @@ function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  
+  const isProduction = process.env.NODE_ENV === "production";
+  const backendURL = isProduction ? process.env.VITE_BACKEND_URL : "http://localhost:5454";
 
   const navigate = useNavigate();
   const { setUser } = useAuth();
@@ -20,7 +23,7 @@ function Login() {
     setError("");
 
     try {
-      const res = await axios.post("https://s74-dhayanithi-capstone-levelup.onrender.com/api/auth/login", {
+      const res = await axios.post(`${backendURL}/api/auth/login`, {
         userOrEmail: identifier,
         password,
       });
