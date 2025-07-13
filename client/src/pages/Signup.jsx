@@ -21,8 +21,9 @@ function Signup() {
   const navigate = useNavigate();
   const { setUser } = useAuth();
 
-  const isProduction = process.env.NODE_ENV === "production";
-  const backendURL = isProduction ? process.env.VITE_BACKEND_URL : "http://localhost:5454";
+  const isProduction = import.meta.env.NODE_ENV === "production";
+  const backendURL = isProduction ? import.meta.env.VITE_BACKEND_URL : "http://localhost:5454";
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
