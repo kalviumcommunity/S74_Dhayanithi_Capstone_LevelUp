@@ -12,8 +12,8 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
-  const isProduction = import.meta.env.NODE_ENV === "production";
-  const backendURL = isProduction ? import.meta.env.VITE_BACKEND_URL : "http://localhost:5454";
+  // const isProduction = import.meta.env.NODE_ENV === "production";
+  const backendURL = 'https://s74-dhayanithi-capstone-levelup.onrender.com';
 
   const navigate = useNavigate();
   const { setUser } = useAuth();
