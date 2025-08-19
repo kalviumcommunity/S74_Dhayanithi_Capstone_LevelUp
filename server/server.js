@@ -14,7 +14,7 @@ const isProduction = process.env.NODE_ENV === "production";
 const clientURL = process.env.CLIENT_URL || "http://localhost:5173";
 
 // Parse the CLIENT_URL to handle multiple origins if needed
-const allowedOrigins = clientURL.split("||")
+const allowedOrigins = clientURL.split(",")
   .map(url => url.trim())
   .filter(url => url.length > 0);
 
