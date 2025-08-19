@@ -21,7 +21,7 @@ const EditHabitModal = ({ habit, onClose, refresh }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/habits/${habit._id}`, {
+      await axios.put(`/habits/update/${habit._id}`, {
         ...formData,
         startDate: new Date(formData.startDate)
       });

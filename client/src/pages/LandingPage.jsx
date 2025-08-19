@@ -48,7 +48,7 @@ function LandingPage() {
                 </div>
                 {/* Optional Illustration Placeholder */}
                 <div className="w-full lg:w-1/2 hidden lg:block">
-                    <img src="/illustrations/dashboard.png" alt="Dashboard Preview" className="w-full max-w-md mx-auto" />
+                    <img src="./illustrations/dashboard.png" alt="Dashboard Preview" className="w-full max-w-md mx-auto" />
                 </div>
             </section>
 
@@ -148,9 +148,9 @@ function LandingPage() {
                         🚀 Android & iOS apps (coming soon)
                     </p>
                     <div className="flex justify-center gap-4 mt-6">
-                        <img src="/mockups/laptop.png" alt="Laptop Mockup" className="w-24" />
-                        <img src="/mockups/tablet.png" alt="Tablet Mockup" className="w-20" />
-                        <img src="/mockups/phone.png" alt="Phone Mockup" className="w-16" />
+                        <img src="./mockups/laptop.png" alt="Laptop Mockup" className="w-24" />
+                        <img src="./mockups/tablet.png" alt="Tablet Mockup" className="w-20" />
+                        <img src="./mockups/phone.png" alt="Phone Mockup" className="w-16" />
                     </div>
                 </div>
             </section>
