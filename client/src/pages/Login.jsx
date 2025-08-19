@@ -1,8 +1,7 @@
 // src/pages/Login.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import axios from "../services/axios";
-import axios from "axios";
+import axios from "../services/axios";
 import { useAuth } from "../context/authContext.jsx";
 import { EyeIcon, EyeOffIcon } from "lucide-react"; // make sure you have lucide-react or use any icon lib
 
@@ -12,8 +11,7 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
-  // const isProduction = import.meta.env.NODE_ENV === "production";
-  const backendURL = 'https://s74-dhayanithi-capstone-levelup.onrender.com';
+  // No need for backendURL as it's configured in axios instance
 
   const navigate = useNavigate();
   const { setUser } = useAuth();
@@ -23,10 +21,13 @@ function Login() {
     setError("");
 
     try {
-      const res = await axios.post(`${backendURL}/api/auth/login`, {
-        userOrEmail: identifier,
-        password,
-      });
+      const res = await axios.post(
+        "/auth/login",
+        {
+          userOrEmail: identifier,
+          password,
+        }
+      );
 
       setUser(res.data.user);
       navigate("/dashboard");
@@ -40,7 +41,7 @@ function Login() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-white to-[#f1f5f9] text-gray-800">
       <div className="bg-white border border-gray-200 p-8 rounded-2xl shadow-lg w-full max-w-md transition-all duration-500 ease-in-out hover:shadow-[0_0_30px_#c7d2fe]">
         <h2 className="text-3xl font-bold text-center mb-6 text-indigo-600">
-          Welcome Back to <span className="text-indigo-700">LevelUp</span> 🚀
+          Welcome Back to <span className="text-indigo-700">LevelUp</span> 
         </h2>
         <p className="text-center text-sm mb-6 text-gray-500">
           Track better. Build faster. Grow forever.

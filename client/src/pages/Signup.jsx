@@ -3,11 +3,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
-// import API from "../services/axios";
+import axios from "../services/axios";
 import { toast } from "react-toastify";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
 
 function Signup() {
   const [name, setName] = useState("");
@@ -25,13 +24,9 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    
-    const isProduction = import.meta.env.NODE_ENV === "production";
-    // const backendURL = isProduction ? import.meta.env.VITE_BACKEND_URL : "http://localhost:5454";
-    const backendURL = 'https://s74-dhayanithi-capstone-levelup.onrender.com';
-    
+
     try {
-      const response = await axios.post( `${backendURL}/api/auth/register`, {
+      const response = await axios.post("/auth/register", {
         name,
         userId,
         email,
@@ -55,7 +50,7 @@ function Signup() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-white to-[#f1f5f9] text-gray-800">
       <div className="bg-white border border-gray-200 p-6 rounded-xl shadow-lg w-full max-w-sm transition-all duration-500 ease-in-out hover:shadow-[0_0_30px_#c7d2fe]">
         <h2 className="text-3xl font-bold text-center mb-4 text-indigo-600">
-          Create your <span className="text-indigo-700">LevelUp</span> account 🚀
+          Create your <span className="text-indigo-700">LevelUp</span> account 
         </h2>
         <p className="text-center text-sm mb-4 text-gray-500">
           Join the community and grow every day!

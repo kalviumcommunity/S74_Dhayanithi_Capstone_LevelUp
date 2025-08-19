@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Route Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    .test-container {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .test-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .test-name {
+      font-weight: bold;
+    }
+    .test-url {
+      color: #0066cc;
+      word-break: break-all;
+    }
+    .test-button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .test-result {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #f5f5f5;
+      border-radius: 4px;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+    .success {
+      color: green;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>API Route Test</h1>
+  
+  <div class="environment-selector">
+    <label for="environment">Environment:</label>
+    <select id="environment" onchange="updateUrls()">
+      <option value="local">Local Development</option>
+      <option value="production">Production</option>
+    </select>
+  </div>
+  
+  <div id="tests-container"></div>
+
+  <script>
+    // Configuration
+    const environments = {
+      local: {
+        baseUrl: 'http://localhost:5454/api'
+      },
+      production: {
+        baseUrl: 'https://s74-dhayanithi-capstone-levelup.onrender.com/api'
+      }
+    };
+
+    // Test endpoints
+    const endpoints = [
+      { method: 'GET', path: '/', name: 'API Root' },
+      { method: 'GET', path: '/auth/me', name: 'Get Current User' },
+      { method: 'GET', path: '/habits/all-habits', name: 'Get All Habits' },
+      { method: 'GET', path: '/habits/total-streak', name: 'Get Total Streak' },
+    ];
+
+    // Create test elements
+    function createTests() {
+      const container = document.getElementById('tests-container');
+      container.innerHTML = '';
+      
+      const environment = document.getElementById('environment').value;
+      const baseUrl = environments[environment].baseUrl;
+      
+      endpoints.forEach(endpoint => {
+        const testDiv = document.createElement('div');
+        testDiv.className = 'test-container';
+        
+        const headerDiv = document.createElement('div');
+        headerDiv.className = 'test-header';
+        
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'test-name';
+        nameSpan.textContent = endpoint.name;
+        
+        const urlSpan = document.createElement('span');
+        urlSpan.className = 'test-url';
+        urlSpan.textContent = `${baseUrl}${endpoint.path}`;
+        
+        headerDiv.appendChild(nameSpan);
+        headerDiv.appendChild(urlSpan);
+        
+        const button = document.createElement('button');
+        button.className = 'test-button';
+        button.textContent = `Test ${endpoint.method}`;
+        button.onclick = () => testEndpoint(endpoint, baseUrl);
+        
+        const resultDiv = document.createElement('div');
+        resultDiv.className = 'test-result';
+        resultDiv.id = `result-${endpoint.method}-${endpoint.path.replace(/\//g, '-')}`;
+        resultDiv.style.display = 'none';
+        
+        testDiv.appendChild(headerDiv);
+        testDiv.appendChild(button);
+        testDiv.appendChild(resultDiv);
+        
+        container.appendChild(testDiv);
+      });
+    }
+
+    // Test an endpoint
+    async function testEndpoint(endpoint, baseUrl) {
+      const resultId = `result-${endpoint.method}-${endpoint.path.replace(/\//g, '-')}`;
+      const resultDiv = document.getElementById(resultId);
+      
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = 'Testing...';
+      
+      try {
+        const response = await fetch(`${baseUrl}${endpoint.path}`, {
+          method: endpoint.method,
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        const data = await response.text();
+        let jsonData;
+        try {
+          jsonData = JSON.parse(data);
+        } catch (e) {
+          jsonData = data;
+        }
+        
+        resultDiv.innerHTML = `<span class="success">Status: ${response.status}</span>\n\nResponse:\n${JSON.stringify(jsonData, null, 2)}`;
+      } catch (error) {
+        resultDiv.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+      }
+    }
+
+    // Update URLs when environment changes
+    function updateUrls() {
+      createTests();
+    }
+
+    // Initialize
+    createTests();
+  </script>
+</body>
+</html>
