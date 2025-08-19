@@ -7,15 +7,19 @@
 
 import axios from 'axios';
 
+// Import environment variables
+import dotenv from 'dotenv';
+dotenv.config({ path: '../src/.env' });
+
 // Test environments
 const environments = [
   {
     name: 'Local Development',
-    baseURL: 'http://localhost:5454/'
+    baseURL: process.env.VITE_LOCAL_BACKEND_URL || 'http://localhost:5454/'
   },
   {
     name: 'Production',
-    baseURL: 'https://s74-dhayanithi-capstone-levelup.onrender.com/'
+    baseURL: process.env.VITE_BACKEND_URL || 'https://s74-dhayanithi-capstone-levelup.onrender.com/'
   }
 ];
 
