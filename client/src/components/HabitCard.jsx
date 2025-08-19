@@ -71,7 +71,7 @@ const HabitCard = ({ habit, refresh }) => {
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this habit? This action cannot be undone.')) {
       try {
-        await axios.delete(`/habits/${habit._id}`);
+        await axios.delete(`/habits/delete/${habit._id}`);
         refresh();
         setShowMenu(false);
       } catch (err) {
