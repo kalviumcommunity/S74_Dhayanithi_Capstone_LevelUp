@@ -10,13 +10,39 @@ import { connectDB } from "./config/db.js";
 dotenv.config();
 const app = express();
 
-// const isProduction = process.env.NODE_ENV === "production";
+const isProduction = process.env.NODE_ENV === "production";
+const clientURL = process.env.CLIENT_URL || "http://localhost:5173";
+
+// Parse the CLIENT_URL to handle multiple origins if needed
+const allowedOrigins = clientURL.split("||")
+  .map(url => url.trim())
+  .filter(url => url.length > 0);
+
+// Ensure we always have both production and development URLs
+if (!allowedOrigins.includes("http://localhost:5173")) {
+  allowedOrigins.push("http://localhost:5173");
+}
+if (!allowedOrigins.includes("https://levelup-habits.netlify.app")) {
+  allowedOrigins.push("https://levelup-habits.netlify.app");
+}
+
+console.log("🌐 Allowed CORS origins:", allowedOrigins);
 
 // 🌐 Middleware
 app.use(express.json());
 app.use(cookieParser());
+
 app.use(cors({
-  origin: "https://levelup-habits.netlify.app", // Frontend URL
+  origin: function(origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl, etc)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = `CORS policy does not allow access from origin: ${origin}`;
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
   credentials: true
 }));
 
@@ -32,6 +58,6 @@ connectDB()
 
 const port = process.env.PORT || 5455
 app.listen(port, () => {
-  console.log(`🚀 Server running on http://localhost:${port}`);
+  console.log(` Server running on http://localhost:${port}`);
 });
 
