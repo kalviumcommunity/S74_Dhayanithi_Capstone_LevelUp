@@ -7,20 +7,49 @@ function LandingPage() {
     return (
         <div className="bg-white text-gray-800">
             {/* ====== Navbar ======= */}
-            <nav className="sticky top-0 z-50 bg-white shadow-md px-4 sm:px-6 py-3 flex justify-between items-center">
-                <h1 className="text-2xl font-bold text-indigo-600">LevelUp</h1>
-                <ul className="hidden md:flex space-x-6">
-                    <li><a href="#features" className="hover:text-indigo-600 transition">Features</a></li>
-                    <li><a href="/blog" className="hover:text-indigo-600 transition">Blog</a></li>
-                    <li><button onClick={() => navigate("/login")} className="hover:text-indigo-600 transition">Login</button></li>
-                </ul>
-                <button
-                    onClick={() => navigate("/signup")}
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-lg font-semibold transition"
-                >
-                    Get Started
-                </button>
-            </nav>
+            <nav className="sticky top-0 z-50 bg-white shadow px-6 py-4 flex items-center justify-between">
+  <h1 className="text-2xl font-bold text-indigo-600">LevelUp</h1>
+
+  <div className="flex items-center space-x-6">
+    <ul className="hidden md:flex space-x-6">
+      <li><a href="#features" className="hover:text-indigo-600">Features</a></li>
+      <li><a href="/blog" className="hover:text-indigo-600">Blog</a></li>
+    </ul>
+    <button
+  onClick={() => navigate("/login")}
+  className="group relative px-6 py-3 border-2 border-indigo-600 text-indigo-600 rounded-lg 
+             overflow-hidden transition-all duration-300 ease-out
+             hover:bg-indigo-50 hover:border-indigo-700 hover:text-indigo-700 
+             hover:shadow-lg hover:-translate-y-0.5 
+             active:translate-y-0 active:transition-transform active:duration-75
+             before:absolute before:inset-0 before:bg-gradient-to-r 
+             before:from-transparent before:via-white/20 before:to-transparent
+             before:-translate-x-full before:transition-transform before:duration-700
+             hover:before:translate-x-full"
+>
+  <span className="relative z-10">Login</span>
+</button>
+
+<button
+  onClick={() => navigate("/signup")}
+  className="group relative px-6 py-3 bg-gradient-to-r from-indigo-600 to-indigo-700 
+             text-white rounded-lg overflow-hidden
+             transition-all duration-300 ease-out
+             hover:from-indigo-700 hover:to-indigo-800 
+             hover:shadow-xl hover:shadow-indigo-500/25 hover:-translate-y-0.5
+             active:translate-y-0 active:transition-transform active:duration-75
+             before:absolute before:inset-0 before:bg-gradient-to-r 
+             before:from-transparent before:via-white/20 before:to-transparent
+             before:-translate-x-full before:transition-transform before:duration-700
+             hover:before:translate-x-full"
+>
+  <span className="relative z-10">Get Started</span>
+</button>
+  </div>
+</nav>
+
+
+
 
             {/* ====== Hero Section ======= */}
             <section className="min-h-screen flex flex-col lg:flex-row items-center justify-center gap-10 px-6 py-16 bg-gradient-to-br from-indigo-50 via-white to-teal-50">
@@ -46,10 +75,15 @@ function LandingPage() {
                         </a>
                     </div>
                 </div>
-                {/* Optional Illustration Placeholder */}
+                
                 <div className="w-full lg:w-1/2 hidden lg:block">
-                    <img src="./illustrations/dashboard.png" alt="Dashboard Preview" className="w-full max-w-md mx-auto" />
-                </div>
+                    <img 
+                        src="./src/assets/dashboard-preview-levelup.png" 
+                        alt="Dashboard Preview" 
+                        className="w-full h-full object-cover" 
+                    />
+                    </div>
+
             </section>
 
             {/* ====== What is LevelUp? ======= */}
