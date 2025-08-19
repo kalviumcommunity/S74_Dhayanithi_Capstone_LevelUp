@@ -2,7 +2,8 @@
 import axios from 'axios';
 
 // Determine environment and set the appropriate base URL
-const isProduction = import.meta.env.VITE_NODE_ENV === 'production';
+// const isProduction = import.meta.env.VITE_NODE_ENV === 'production';
+const isProduction = true;
 console.log('Environment:', import.meta.env.VITE_NODE_ENV, 'isProduction:', isProduction);
 const baseURL = isProduction 
   ? 'https://s74-dhayanithi-capstone-levelup.onrender.com/api'
