@@ -13,12 +13,12 @@ const app = express();
 const isProduction = process.env.NODE_ENV === "production";
 const clientURL = process.env.CLIENT_URL || "http://localhost:5173";
 
-// Parse the CLIENT_URL to handle multiple origins if needed
+
 const allowedOrigins = clientURL.split(",")
   .map(url => url.trim())
   .filter(url => url.length > 0);
 
-// Ensure we always have both production and development URLs
+
 if (!allowedOrigins.includes("http://localhost:5173")) {
   allowedOrigins.push("http://localhost:5173");
 }
@@ -46,11 +46,11 @@ app.use(cors({
   credentials: true
 }));
 
-// 📦 Routes
+
 app.use("/api/auth", authRoutes);
 app.use("/api/habits", habitRoutes);
 
-// Root route
+
 app.get('/', (req, res) => res.send("Lol....this is levelup"));
 
 

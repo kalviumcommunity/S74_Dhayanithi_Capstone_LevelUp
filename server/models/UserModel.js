@@ -8,17 +8,17 @@ const userSchema = new mongoose.Schema({
     userId: {
         type: String,
         required: true,
-        unique: true  // Ensures userId is unique
+        unique: true  
     },
     email: {
         type: String,
         required: true,
-        unique: true  // Ensures email is unique
+        unique: true  
     },
     phone: {
         type: String,
         required: true,
-        unique: true  // Ensures phone is unique
+        unique: true 
     },
     password: {
         type: String,

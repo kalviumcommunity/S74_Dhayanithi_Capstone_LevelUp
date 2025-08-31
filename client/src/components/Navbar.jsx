@@ -63,16 +63,16 @@ const Navbar = () => {
       path: "/myhabits", 
       icon: <HiOutlineChartBar className="w-5 h-5" /> 
     },
-    { 
-      name: "Community", 
-      path: "/community", 
-      icon: <HiOutlineUserGroup className="w-5 h-5" /> 
-    },
-    { 
-      name: "Leaderboard", 
-      path: "/leaderboard", 
-      icon: <FiAward className="w-5 h-5" /> 
-    },
+    // { 
+    //   name: "Community", 
+    //   path: "/community", 
+    //   icon: <HiOutlineUserGroup className="w-5 h-5" /> 
+    // },
+    // { 
+    //   name: "Leaderboard", 
+    //   path: "/leaderboard", 
+    //   icon: <FiAward className="w-5 h-5" /> 
+    // },
   ];
 
   return (

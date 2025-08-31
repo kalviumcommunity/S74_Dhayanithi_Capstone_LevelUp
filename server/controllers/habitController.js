@@ -1,8 +1,7 @@
-
 import HabitModel from "../models/HabitModel.js";
 import mongoose from "mongoose";
 
-// Helper function to assign badge based on streak
+
 const getBadgeFromStreak = (streak) => {
     if (streak >= 50) return "gold";
     if (streak >= 30) return "silver";
@@ -10,7 +9,7 @@ const getBadgeFromStreak = (streak) => {
     return "none";
 };
 
-// Utility: Format date as YYYY-MM-DD
+
 const formatDate = (date) => {
     return date.toISOString().split("T")[0];
 };
@@ -19,15 +18,7 @@ const formatDate = (date) => {
 export const createHabit = async (req, res) => {
     try {
         const {
-            title,
-            description,
-            category,
-            motivation,
-            frequency,
-            targetPerDay,
-            preferredTime,
-            startDate
-        } = req.body;
+            title,description,category,motivation,frequency,targetPerDay,preferredTime,startDate} = req.body;
         
         const userId = req.user._id;
 
@@ -51,7 +42,7 @@ export const createHabit = async (req, res) => {
     }
 };
 
-// Update a habit
+
 export const updateHabit = async (req, res) => {
     try { 
         const { habitId } = req.params;
@@ -71,7 +62,7 @@ export const updateHabit = async (req, res) => {
     }
 };
 
-// Delete a habit
+
 export const deleteHabit = async (req, res) => {
     try { 
         const { habitId } = req.params;
@@ -89,7 +80,7 @@ export const deleteHabit = async (req, res) => {
     }
 };
 
-// Archive or unarchive a habit
+
 export const archiveHabit = async (req, res) => {
     try {
         const { habitId } = req.params;
@@ -124,7 +115,8 @@ export const markHabitComplete = async (req, res) => {
         const today = formatDate(new Date());
         const lastChecked = habit.lastCheckedDate ? formatDate(new Date(habit.lastCheckedDate)) : null;
 
-        // Reset for new day
+        // Reset for new day then prevent over-completion and increment todays count then check 
+        // daily goal met and updates history
         if (lastChecked && lastChecked !== today) {
             if (habit.completedToday < habit.targetPerDay) {
                 habit.currentStreak = Math.max(habit.currentStreak - 5, 0);
@@ -133,22 +125,18 @@ export const markHabitComplete = async (req, res) => {
             habit.completedToday = 0;
         }
 
-        // Prevent over-completion
         if (habit.completedToday >= habit.targetPerDay) {
             habit.lastCheckedDate = new Date();
             return res.status(200).json({ message: "Target already met for today", habit });
         }
 
-        // Increment today's count
         habit.completedToday++;
 
-        // Check if daily goal met
         if (habit.completedToday >= habit.targetPerDay) {
             habit.currentStreak++;
             habit.lastCompleted = new Date();
         }
 
-        // Update history
         const historyEntry = habit.history.find(entry => entry.date === today);
         if (historyEntry) {
             historyEntry.completedCount++;
@@ -156,19 +144,14 @@ export const markHabitComplete = async (req, res) => {
             habit.history.push({ date: today, completedCount: 1 });
         }
 
-        // Update timestamp
         habit.lastCheckedDate = new Date();
 
-        // Assign badge
         habit.badge = getBadgeFromStreak(habit.currentStreak);
 
-        // Calculate progress
         const progressPercentage = (habit.completedToday / habit.targetPerDay) * 100;
 
-        // Save to DB
         await habit.save();
 
-        // Return response
         res.status(200).json({
             message: "Habit updated",
             habit,
@@ -278,7 +261,6 @@ export const getHabitsByCategory = async (req, res) => {
     }
 };
 
-// Get habits by time of day
 export const getHabitsByTime = async (req, res) => {
     try {
         const userId = req.user._id;

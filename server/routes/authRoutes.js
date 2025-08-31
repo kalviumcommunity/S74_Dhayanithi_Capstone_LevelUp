@@ -9,10 +9,10 @@ router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", logout);
 
-// 💡 Example protected route:
-router.get("/protected", protect, (req, res) => {
-  res.json({ message: `Hello ${req.user.name}, you are authenticated!` });
-});
+// For my reference EXAMPLE
+// router.get("/protected", protect, (req, res) => {
+//   res.json({ message: `Hello ${req.user.name}, you are authenticated!` });
+// });
 
 // GET /me - fetch logged-in user's data
 router.get("/me", protect, (req, res) => {
