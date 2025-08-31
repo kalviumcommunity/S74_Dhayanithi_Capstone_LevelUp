@@ -58,7 +58,7 @@ function LandingPage() {
                         Track habits. <br /> Grow daily.
                     </h1>
                     <p className="text-lg md:text-xl text-gray-600 mb-8">
-                        LevelUp is your personal habit tracker, AI coach, and growth buddy — all in one place.
+                        LevelUp is your personal habit tracker and growth buddy in one place.
                     </p>
                     <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
                         <button
@@ -78,7 +78,7 @@ function LandingPage() {
                 
                 <div className="w-full lg:w-1/2 hidden lg:block">
                     <img 
-                        src="./src/assets/dashboard-preview-levelup.png" 
+                        src="dashboard-preview-levelup.png"
                         alt="Dashboard Preview" 
                         className="w-full h-full object-cover" 
                     />
@@ -104,19 +104,19 @@ function LandingPage() {
                     <h2 className="text-3xl font-bold text-center mb-10">Who is LevelUp for?</h2>
                     <ul className="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700">
                         <li className="flex items-start gap-3">
-                            <span>🎓</span>
+                            <span>•</span>
                             <span>Students managing time, study routines, or exam prep</span>
                         </li>
                         <li className="flex items-start gap-3">
-                            <span>💼</span>
+                            <span>•</span>
                             <span>Professionals mastering new skills or staying organized</span>
                         </li>
                         <li className="flex items-start gap-3">
-                            <span>🏋️</span>
+                            <span>•</span>
                             <span>Fitness & wellness enthusiasts building physical and mental strength</span>
                         </li>
                         <li className="flex items-start gap-3">
-                            <span>🌱</span>
+                            <span>•</span>
                             <span>Anyone on a self-improvement journey</span>
                         </li>
                     </ul>
@@ -131,7 +131,7 @@ function LandingPage() {
                         {[
                             "Set Habits – Define what you want to achieve",
                             "Track Daily – Check off your progress",
-                            "AI Coach – Get reminders, tips, and encouragement",
+                            
                             "Join Community – Share and stay accountable",
                             "Level Up – Earn rewards and grow your profile",
                         ].map((step, index) => (
@@ -158,7 +158,7 @@ function LandingPage() {
                 </div>
             </section>
 
-            {/* ====== Benefits ======= */}
+           
             <section id="benefits" className="py-16 px-6 bg-white">
                 <div className="max-w-4xl mx-auto text-center">
                     <h2 className="text-3xl font-bold mb-8">What you’ll gain from using LevelUp</h2>
@@ -172,7 +172,7 @@ function LandingPage() {
                 </div>
             </section>
 
-            {/* ====== Platform Availability ======= */}
+            
             <section id="platforms" className="py-16 px-6 bg-gray-50">
                 <div className="max-w-4xl mx-auto text-center">
                     <h2 className="text-3xl font-bold mb-8">Access LevelUp anywhere</h2>
@@ -189,7 +189,7 @@ function LandingPage() {
                 </div>
             </section>
 
-            {/* ====== Join CTA ======= */}
+            
             <section id="join" className="py-16 px-6 bg-indigo-600 text-white">
                 <div className="max-w-3xl mx-auto text-center">
                     <h2 className="text-3xl font-bold mb-4">Join the Movement</h2>
@@ -205,12 +205,12 @@ function LandingPage() {
                 </div>
             </section>
 
-            {/* ====== Footer ======= */}
+       
             <footer className="bg-gray-900 text-gray-300 py-10 px-6">
                 <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div>
                         <h3 className="text-lg font-bold mb-4">About LevelUp</h3>
-                        <p className="text-sm">Your personal habit tracker, AI coach, and growth buddy.</p>
+                        <p className="text-sm">Your personal habit tracker and growth buddy.</p>
                     </div>
                     <div>
                         <h3 className="text-lg font-bold mb-4">Quick Links</h3>
@@ -233,7 +233,7 @@ function LandingPage() {
                 </div>
             </footer>
 
-            {/* ====== Scroll to Top Button ======= */}
+            
             <button
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                 className="fixed bottom-6 right-6 bg-indigo-600 text-white p-3 rounded-full shadow-lg hover:bg-indigo-700 transition"

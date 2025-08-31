@@ -24,7 +24,7 @@ export const protect = async (req, res, next) => {
       });
     }
 
-    req.user = user;  // Attach the user to the request object
+    req.user = user;
     next();
   } catch (error) {
     console.error("Auth error:", error.message);
