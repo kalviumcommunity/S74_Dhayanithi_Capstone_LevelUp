@@ -35,7 +35,7 @@ const AddHabitModal = ({ onClose, onHabitAdded }) => {
   };
 
   return (
-    // Overlay with blur effect on the background (backdrop-blur)
+   
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-opacity-40 backdrop-blur-md  bg-opacity-50">
 
       <div className="bg-white rounded-2xl shadow-lg w-full max-w-sm mx-auto p-4 sm:p-5 relative">

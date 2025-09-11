@@ -36,8 +36,8 @@ function Signup() {
 
       console.log("✅ Signup Success:", response.data);
       setUser(response.data.user);
-      toast.success("Signup successful! 🎉 Redirecting to dashboard...");
       navigate("/dashboard");
+      toast.success("Signup successful! 🎉 Login to continue...");
     } catch (err) {
       console.error("❌ Signup Error:", err);
       const message = err?.response?.data?.message || "Something went wrong";
@@ -136,6 +136,7 @@ function Signup() {
           >
             Sign Up
           </button>
+          <div className="text-center mt-4 text-sm text-gray-600" >After Signup you have to login again to verify your email</div>
         </form>
 
         <div className="text-center mt-4 text-sm text-gray-600">

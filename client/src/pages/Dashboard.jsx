@@ -4,6 +4,7 @@ import DashboardGreetingCard from '../components/DashboardGreetingCard';
 import QuoteBox from '../components/QuoteBox';
 import HabitCard from '../components/HabitCard';
 import AddHabitModal from '../components/AddHabitModal';
+import TonyAI from '../components/TonyAI';
 
 const Dashboard = () => {
   const [user, setUser] = useState({ name: '' });
@@ -238,6 +239,12 @@ const Dashboard = () => {
       {showModal && (
         <AddHabitModal onClose={() => setShowModal(false)} onHabitAdded={fetchHabits} />
       )}
+      <TonyAI
+        userHabits={habits}
+        userProgress={{ averageProgress, streak }}
+      />
+
+
     </div>
   );
 };
