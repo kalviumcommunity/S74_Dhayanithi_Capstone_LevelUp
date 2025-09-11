@@ -5,6 +5,7 @@ import ArchivedHabits from '../components/ArchivedHabits.jsx';
 import EditHabitModal from '../components/EditHabitModal.jsx';
 import AddHabitModal from '../components/AddHabitModal.jsx';  // Import the AddHabitModal
 import axios from '../services/axios';
+import TonyAI from '../components/TonyAI.jsx';
 
 const MyHabits = () => {
   const [habits, setHabits] = useState([]);
@@ -13,7 +14,18 @@ const MyHabits = () => {
   const [filterType, setFilterType] = useState('latest');
   const [editingHabit, setEditingHabit] = useState(null);
   const [showAddHabitModal, setShowAddHabitModal] = useState(false);  // State to control the Add Habit Modal
+  const [averageProgress, setAverageProgress] = useState(0);
+  const [streak, setStreak] = useState(0);
 
+  const fetchStreak = async () => {
+      try {
+        const res = await axios.get('/habits/total-streak');
+        setStreak(res.data.totalStreak);
+        setAverageProgress(parseFloat(res.data.averageProgress) || 0);
+      } catch (err) {
+        console.error("Error fetching streak:", err);
+      }
+    };
   const fetchHabits = async () => {
     try {
       const res = await axios.get('/habits/all-habits');
@@ -31,6 +43,7 @@ const MyHabits = () => {
 
   useEffect(() => {
     fetchHabits();
+    fetchStreak();
   }, []);
 
   const openEdit = (habit) => {
@@ -109,6 +122,11 @@ const MyHabits = () => {
           }}
         />
       )}
+
+      <TonyAI
+              userHabits={habits}
+              userProgress={{ averageProgress, streak }}
+            />
     </div>
   );
 };
