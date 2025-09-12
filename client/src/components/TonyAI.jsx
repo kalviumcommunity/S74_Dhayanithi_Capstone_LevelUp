@@ -73,7 +73,7 @@ const TonyAI = ({ userHabits = [], userProgress = {} }) => {
           "Authorization": `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-          model: "openai/gpt-4o", 
+          model: "openai/gpt-3.5-turbo", 
           messages: [
               { role: "system", content: systemMessage },
               { role: "user", content: userMessage }
