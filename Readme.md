@@ -1,168 +1,87 @@
-# 🚀 LevelUp: Habit Tracking & Personal Growth Platform
+# 🚀 LevelUp 
 
-LevelUp is a **habit-tracking and personal development platform** designed to help users improve their daily routines through **gamification**, **AI coaching**, and **community engagement**. The platform aims to deliver a **personalized experience** to motivate users toward their self-improvement goals.
-
----
-
-## 🌟 Features & Functionalities
-
-### 🔐 2.1 User Authentication & Profile Management
-- Secure signup and login with MongoDB-based user management  
-- Profile customization options  
-- OAuth integration (Google Sign-In)  
-- Password hashing with **bcrypt**  
-- **JWT-based authentication** for secure session management  
+**Live Demo:** [https://levelup-habits.netlify.app/](https://levelup-habits.netlify.app/)
 
 ---
 
-### 📆 2.2 Habit Tracking & Gamification
-- Set **daily, weekly, and monthly habits**  
-- 🔥 **Dynamic streak system**:
-  - Daily streaks (-5 point penalty for missed habits)
-  - Weekly & monthly badge rewards
-  - First-month lenient tracking for better retention  
-- 🧠 Dashboard includes:
-  - User progress  
-  - Streak counts  
-  - Motivational quotes  
-  - Unfinished habits  
+## What is LevelUp Habits?
+
+LevelUp Habits is a modern, user-friendly habit tracking web application designed to help individuals build, monitor, and sustain positive habits. It empowers users to set daily goals, track progress, analyze streaks, and stay motivated with personalized insights.
 
 ---
 
-### 🤖 2.3 AI Coaching Chatbot
-**Capabilities:**
-- AI-powered personalized coaching  
-- Natural Language Processing (NLP)  
-- Sentiment analysis & predictive habit modeling  
-- Adaptive recommendation engine  
+## Why I Built This
 
-**Technical Implementation:**
-- GPT-3.5/4 integration  
-- Machine Learning for:
-  - Predictive success modeling  
-  - Personalized intervention strategies  
-  - Dynamic goal adjustment  
-- Voice interaction support  
-- CBT-based psychological techniques  
+- **Personal Growth:** I wanted a tool that makes habit formation simple, visual, and rewarding.
+- **Motivation:** Many habit apps are either too complex or lack engaging features. LevelUp Habits is designed to be intuitive and fun.
+- **Learning:** Building this project helped me master full-stack development, modern React patterns, and best practices in web app architecture.
 
 ---
 
-### 👥 2.4 Challenges & Community Features
-- Create and join habit-focused groups  
-- Group voice calls & shared tracking  
-- Share images, videos & discussions  
-- AI-powered community suggestions  
+## Key Features
+
+- **User Authentication:** Secure signup, login, and logout.
+- **Dashboard:** Visual overview of your habits, streaks, and achievements.
+- **Habit Management:** Add, edit, archive, and delete habits.
+- **Progress Tracking:** Mark habits as completed, view daily/weekly analytics.
+- **Motivation & Insights:** Get motivational quotes and personalized suggestions.
+- **Profile Page:** View and edit your profile, add social links, and see habit stats.
+- **Responsive Design:** Works seamlessly on desktop and mobile.
+- **Protected Routes:** Only authenticated users can access habit data.
+- **Global Loader & Toasts:** Smooth user experience with feedback for all actions.
 
 ---
 
-### 🏆 2.5 Leaderboard & Social Motivation
-- Global & friend-based leaderboards  
-- Ranks based on:
-  - Streak scores  
-  - Badges earned  
-  - Habit completion rates  
-- Filter options for personalized views  
+## How to Use LevelUp Habits Efficiently
+
+1. **Sign Up & Log In:** Create your account to start tracking.
+2. **Add Habits:** Click "Add Habit" and fill in details like title, category, frequency, and motivation.
+3. **Track Daily:** Mark habits as completed each day to build streaks.
+4. **Analyze Progress:** Use the dashboard to view your streaks, badges, and analytics.
+5. **Edit Profile:** Go to your profile to add a description and social links (LinkedIn, Instagram, X, YouTube, GitHub).
+6. **Toggle Habit Views:** On your profile, switch between completed and incomplete habits for focused tracking.
+7. **Stay Motivated:** Read motivational quotes and get AI-powered suggestions (coming soon).
+8. **Archive Habits:** Hide habits you’re not working on, but keep your history.
+9. **Logout Securely:** Your data stays safe and private.
 
 ---
 
-## 💻 Technology Stack
+## Technical Details
 
-### 🧩 Frontend
-- React.js  
-- Tailwind CSS  
-- Framer Motion (animations)  
-- Recharts (data visualization)  
-- React Router (navigation)  
+- **Frontend:**  
+  - React 19, Vite, Tailwind CSS  
+  - Routing: react-router-dom  
+  - State: useState, useContext  
+  - HTTP: Axios  
+  - Icons: lucide-react, react-icons
 
-### 🛠️ Backend
-- Node.js  
-- Express.js  
-- MongoDB Atlas  
-- Mongoose (ODM)  
+- **Backend:**  
+  - Node.js, Express.js  
+  - Database: MongoDB (Mongoose ODM)  
+  - Auth: JWT, bcryptjs  
+  - API: RESTful endpoints for habits and users
 
-### 🔐 Authentication
-- JWT for secure sessions  
-- Passport.js for OAuth  
-- bcrypt for password hashing  
-
----
-
-## 🗓️ Development Timeline
-
-### 📌 Phase 1: Planning & Design (Days 1–6)
-- **Day 1:** Research, brainstorm features, finalize user flow & wireframes  
-- **Day 2:** Low-fidelity UI design (Figma)  
-- **Day 3:** High-fidelity UI with polished layout  
-- **Day 4:** Setup GitHub repo, README, issues  
-- **Day 5:** Define database schemas (models & relationships)  
-- **Day 6:** Document API endpoints and finalize roadmap  
+- **Other:**  
+  - Global loader, toast notifications  
+  - Profile data stored in localStorage for persistence  
+  - Responsive and accessible UI
 
 ---
 
-### ⚙️ Phase 2: Backend Development (Days 7–18)
-- **Day 7:** Setup Node.js, Express, MongoDB connection  
-- **Day 8–11:** Implement CRUD APIs (GET, POST, PUT, DELETE)  
-- **Day 12:** Add JWT authentication  
-- **Day 13:** Integrate Google OAuth  
-- **Day 14:** Apply bcrypt password hashing  
-- **Day 15:** Setup indexing & performance tweaks  
-- **Day 16:** Add RBAC (admin/user roles)  
-- **Day 17:** Write backend unit tests  
-- **Day 18:** Deploy backend on Render & test  
+## Highlights
+
+- **Full-stack architecture:** Clean separation of frontend and backend.
+- **Modern React patterns:** Context API, protected routes, custom hooks.
+- **Efficient data flow:** Axios for API calls, localStorage for profile extras.
+- **User-centric design:** Motivational features, analytics, and social integration.
+- **Deployment:** Hosted on Netlify for fast, global access.
 
 ---
 
-### 🖥️ Phase 3: Frontend Development (Days 19–31)
-- **Day 19:** Initialize React project (Vite)  
-- **Day 20:** Setup Tailwind CSS & UI components  
-- **Day 21:** Implement navigation (React Router)  
-- **Day 22–23:** Build Landing, Signup & Login pages  
-- **Day 24:** Implement JWT auth frontend  
-- **Day 25:** Dashboard UI (streaks, badges, quotes)  
-- **Day 26–27:** Habit tracking logic & API calls  
-- **Day 28:** Communities Page UI (search/join/chat)  
-- **Day 29:** Leaderboard page  
-- **Day 30:** Profile Page (edit name, pic, password)  
-- **Day 31:** Deploy frontend on Netlify/Vercel  
+## Try It Now!
+
+👉 [https://levelup-habits.netlify.app/](https://levelup-habits.netlify.app/)
 
 ---
 
-### 🤖 Phase 4: AI & Gamification (Days 32–38)
-- **Day 32:** Habit streak penalty logic  
-- **Day 33:** Badge reward system  
-- **Day 34:** Build chatbot interface  
-- **Day 35:** Integrate GPT-4 API  
-- **Day 36:** Voice chat for group challenges  
-- **Day 37:** Optimize AI suggestions  
-- **Day 38:** Final testing & AI improvements  
-
----
-
-### ✅ Phase 5: Final Testing & Deployment (Days 39–42)
-- **Day 39:** Perform UI/UX testing  
-- **Day 40:** Bug fixes and performance tweaks  
-- **Day 41:** Security audit and testing  
-- **Day 42:** Final deployment and release  
-
----
-
-## ☁️ Deployment & Hosting
-- **Frontend:** Netlify / Vercel  
-- **Backend:** Render  
-- **Database:** MongoDB Atlas  
-
----
-
-## 🚀 Future Enhancements
-- AI-based goal-setting insights  
-- Multi-language support  
-- Mobile app integration  
-
----
-
-## 🧠 Contribute or Follow Along
-Stay tuned! This is just the beginning of **LevelUp** – the platform that makes self-growth fun, social, and smart.
-
-> “You don’t need to be extreme. Just consistent.” – LevelUp
-
-Deployed Backend Server - **https://s74-dhayanithi-capstone-levelup.onrender.com**
+**LevelUp Habits – Build your best self, one habit at a time!**

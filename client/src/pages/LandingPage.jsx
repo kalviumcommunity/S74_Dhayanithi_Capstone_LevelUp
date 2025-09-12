@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import levelupIcon from "../assets/levelup-icon.png";
 
 
 
@@ -24,7 +25,25 @@ function LandingPage() {
         <div className="bg-white text-gray-800">
             {/* ====== Navbar ======= */}
             <nav className="sticky top-0 z-50 bg-white/50 backdrop-blur-md shadow-md px-6 py-4 flex items-center justify-between transition-colors duration-300">
-                <h1 className="text-2xl font-bold text-indigo-600">↗️LevelUp</h1>
+                <div
+                    className="flex items-center space-x-2 cursor-pointer group"
+                    onClick={() => navigate("/")}
+                  >
+                    {/* The icon now scales and rotates slightly on hover for a playful effect */}
+                    <div className="perspective-container">
+                        <div className="flipper"> {/* This element will do the flipping */}
+                            <img
+                                src={levelupIcon}
+                                alt="LevelUp"
+                                className="w-15 h-15 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6  transform-style-preserve-3d"
+                            />
+                        </div>
+                    </div>
+                    {/* The text now has a gradient, a bolder font, and its letters spread out on hover */}
+                    <span className="text-4xl font-black bg-gradient-to-r from-indigo-700 via-purple-900 to-pink-500 bg-clip-text text-transparent transition-all duration-300 group-hover:tracking-wider">
+                      LevelUp
+                    </span>
+                  </div>
 
                 <div className="flex items-center space-x-6">
                     <ul className="hidden md:flex space-x-6">

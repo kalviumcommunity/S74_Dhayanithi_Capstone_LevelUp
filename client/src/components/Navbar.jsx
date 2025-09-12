@@ -12,6 +12,7 @@ import {
   HiOutlineX
 } from "react-icons/hi";
 import { FiAward } from "react-icons/fi"; // Using trophy/award icon from Feather icons
+import levelupIcon from "../assets/levelup-icon.png";
 
 const Navbar = () => {
   const { user } = useAuth();
@@ -81,20 +82,37 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo Section */}
           <div className="flex items-center">
-            <div
-              className="flex items-center space-x-2 cursor-pointer"
-              onClick={() => navigate("/")}
-            >
-              <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-2 rounded-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                </svg>
-              </div>
-              <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
-                LevelUp
-              </span>
-            </div>
-          </div>
+  {/* The 'group' class is added here to allow child elements to react on hover */}
+  <div
+    className="flex items-center space-x-2 cursor-pointer group"
+    onClick={() => navigate("/dashboard")}
+  >
+    {/* The icon now scales and rotates slightly on hover for a playful effect */}
+
+    {/* Add perspective to the parent container */}
+<div className="perspective-container">
+    <div className="flipper"> {/* This element will do the flipping */}
+        <img
+            src={levelupIcon}
+            alt="LevelUp"
+            className="w-15 h-15 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6  transform-style-preserve-3d"
+        />
+    </div>
+</div>
+    {/* <img
+      src={levelupIcon}
+      alt="LevelUp"
+        className="w-15 h-15 shake-on-hover"
+      // className="w-15 h-15 transition-transform duration-300 ease-out group-hover:scale-110 group-hover:-translate-y-1"
+      // className="w-15 h-15 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"
+    /> */}
+    
+    {/* The text now has a gradient, a bolder font, and its letters spread out on hover */}
+    <span className="text-3xl font-black bg-gradient-to-r from-indigo-600 via-purple-900 to-pink-500 bg-clip-text text-transparent transition-all duration-300 group-hover:tracking-wider">
+      LevelUp
+    </span>
+  </div>
+</div>
 
           
           <div className="hidden md:flex items-center space-x-1">

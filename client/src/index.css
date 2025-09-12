@@ -11,3 +11,16 @@ html {
         html {
             scroll-behavior: smooth;
         }
+
+.perspective-container {
+  perspective: 800px;
+}
+
+.flipper {
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.group:hover .flipper {
+  transform: rotateY(180deg);
+}
