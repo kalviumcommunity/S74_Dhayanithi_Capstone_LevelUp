@@ -165,7 +165,7 @@ function LandingPage({ user = [] }) {
                 <img className="w-9 h-9 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/40?img=3" alt="User avatar 3" />
                 <img className="w-9 h-9 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/40?img=4" alt="User avatar 4" />
               </div>
-              <span className="font-semibold">Trusted by 10,000+ users</span>
+              <span className="font-semibold">Trusted by 80+ users</span>
             </div>
             
             <div className="flex items-center gap-1.5">
@@ -723,7 +723,7 @@ function LandingPage({ user = [] }) {
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-full border-2 border-white"></div>
                 <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-teal-500 rounded-full border-2 border-white"></div>
               </div>
-              <span className="text-sm">1000+ happy users</span>
+              <span className="text-sm">80+ happy users</span>
             </div>
           </div>
         </div>
