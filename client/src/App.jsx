@@ -12,18 +12,31 @@ import { ToastContainer } from "react-toastify";
 import GlobalLoader from "./components/GlobalLoader";
 import { useLoader } from "./context/loaderContext";
 import { useAuth } from "./context/authContext";
+import Profile from "./pages/Profile";
+import { useState } from "react";
 
 const App = () => {
   const { setLoading } = useLoader();
   const location = useLocation();
   const { user } = useAuth();
-
+  const [habits, setHabits] = useState([]);
   // 🌐 Loader on route change
   useEffect(() => {
     setLoading(true);
     const timeout = setTimeout(() => setLoading(false), 300);
     return () => clearTimeout(timeout);
   }, [location.pathname]);
+
+    useEffect(() => {
+    if (user) {
+      axios
+        .get('/habits/all-habits', { withCredentials: true })
+        .then(res => setHabits(res.data.habits || []))
+        .catch(() => setHabits([]));
+    } else {
+      setHabits([]);
+    }
+  }, [user]);
 
   // 🔁 Daily Reset useEffect
   useEffect(() => {
@@ -65,6 +78,7 @@ const App = () => {
             </PrivateRoute>
           }
         />
+        <Route path="/profile" element={<Profile user={user} habits={habits} />} />
       </Routes>
       <ToastContainer position="top-center" />
     </>

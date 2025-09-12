@@ -132,7 +132,7 @@ const DashboardGreetingCard = ({
       <div className="bg-indigo-800 p-4 flex justify-between items-center">
         <p className="text-sm text-indigo-100">
           {remainingHabits === 0 
-            ? "Amazing! You've completed all your habits for today! 🎉" 
+            ? "Awesome work! Your daily habits are building big wins! 🎉" 
             : `You have ${remainingHabits} habit${remainingHabits === 1 ? '' : 's'} left for today`}
         </p>
         <div className="text-xs bg-indigo-900 py-1 px-4 rounded-full text-white shadow-md">
