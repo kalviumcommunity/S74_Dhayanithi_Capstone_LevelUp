@@ -27,7 +27,7 @@ const TonyAI = ({ userHabits = [], userProgress = {} }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState([
-    { role: "system", content: "Hi, I'm Tony! Ask me for habit tips anytime." }
+    { role: "system", content: "Hi, I'm Tony! Ask me for habit tips anytime, and also to know about your habits which you are currently following." }
   ]);
   const [input, setInput] = useState("");
   
@@ -39,7 +39,7 @@ const TonyAI = ({ userHabits = [], userProgress = {} }) => {
   const messagesEndRef = useRef(null);
 
   // The API key is hardcoded.
-  const apiKey = "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";
+  const apiKey = import.meta.env.OPENROUTER_API ||  "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" || "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";
 
   // ---- Helper to call OpenRouter ----
   const callTony = async (question) => {
@@ -47,10 +47,12 @@ const TonyAI = ({ userHabits = [], userProgress = {} }) => {
     try {
       // Craft a more detailed prompt to make sure the AI uses the user data
       const prompt = `
-        You are an AI named Tony, designed to help with habit tracking.
+        You are an AI named Tony, designed to help with habit tracking, and providing personalised tips for the user.
         Here are the user's current habits: ${JSON.stringify(userHabits)}.
         Here is the user's progress: ${JSON.stringify(userProgress)}.
         User question: "${question}".
+        The one who created you is Dhayanithi, a passionate developer focused on habit tracking and self-improvement.
+        His portfolio is https://dhayanithi.vercel.app/, only give, if the user asks about the creator or owner, or developer of Tony.
         Reply with short, friendly tips, using markdown for emphasis and actionable advice based on the provided data.
       `;
 
@@ -95,7 +97,7 @@ const TonyAI = ({ userHabits = [], userProgress = {} }) => {
     setOpen((o) => !o);
     if (!open && messages.length === 1) {
       // Only fetch first suggestions once
-      callTony("Give me quick tips to improve my habits");
+      callTony("Greet me energetically. Give me quick tips to improve my current habits which I have been following.  Give it shorter");
     }
   };
 
