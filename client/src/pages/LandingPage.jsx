@@ -24,109 +24,89 @@ function LandingPage() {
     return (
         <div className="bg-white text-gray-800">
             {/* ====== Navbar ======= */}
-            <nav className="sticky top-0 z-50 bg-white/50 backdrop-blur-md shadow-md px-6 py-4 flex items-center justify-between transition-colors duration-300">
-                <div
-                    className="flex items-center space-x-2 cursor-pointer group"
-                    onClick={() => navigate("/")}
-                  >
-                    {/* The icon now scales and rotates slightly on hover for a playful effect */}
-                    <div className="perspective-container">
-                        <div className="flipper"> {/* This element will do the flipping */}
-                            <img
-                                src={levelupIcon}
-                                alt="LevelUp"
-                                className="w-15 h-15 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6  transform-style-preserve-3d"
-                            />
-                        </div>
+            <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl shadow-sm px-6 py-4 flex items-center justify-between border-b border-white/20">
+            {/* --- Brand Logo Section --- */}
+            <div
+                className="flex items-center space-x-2 cursor-pointer group"
+                onClick={() => navigate("/")}
+            >
+                <div className="perspective-container">
+                    <div className="flipper">
+                        <img
+                            src={levelupIcon}
+                            alt="LevelUp"
+                            className="w-12 h-12"
+                        />
                     </div>
-                    {/* The text now has a gradient, a bolder font, and its letters spread out on hover */}
-                    <span className="text-4xl font-black bg-gradient-to-r from-indigo-700 via-purple-900 to-pink-500 bg-clip-text text-transparent transition-all duration-300 group-hover:tracking-wider">
-                      LevelUp
-                    </span>
-                  </div>
-
-                <div className="flex items-center space-x-6">
-                    <ul className="hidden md:flex space-x-6">
-                        <li>
-                            <a 
-                                href="#features"
-                                onClick={(e) => { e.preventDefault(); scrollToSection("features"); }}
-                                className="hover:text-indigo-600 transition-colors"
-                            >
-                                Features
-                            </a>
-                        </li>
-                        <li>
-                            <a 
-                                href="#how-it-works"
-                                onClick={(e) => { e.preventDefault(); scrollToSection("how-it-works"); }}
-                                className="hover:text-indigo-600 transition-colors"
-                            >
-                                How It Works
-                            </a>
-                        </li>
-                         <li>
-                            <a 
-                                href="#why-levelup"
-                                onClick={(e) => { e.preventDefault(); scrollToSection("why-levelup"); }}
-                                className="hover:text-indigo-600 transition-colors"
-                            >
-                                Why LevelUp?
-                            </a>
-                        </li>
-                    </ul>
-                    {isLoggedIn ? (
-                        <button
-                            onClick={() => navigate("/dashboard")}
-                            className="group relative px-6 py-3 bg-gradient-to-r from-indigo-600 to-indigo-700 
-                             text-white rounded-lg overflow-hidden
-                             transition-all duration-300 ease-out
-                             hover:from-indigo-700 hover:to-indigo-800 
-                             hover:shadow-xl hover:shadow-indigo-500/25 hover:-translate-y-0.5
-                             active:translate-y-0 active:transition-transform active:duration-75
-                             before:absolute before:inset-0 before:bg-gradient-to-r 
-                             before:from-transparent before:via-white/20 before:to-transparent
-                             before:-translate-x-full before:transition-transform before:duration-700
-                             hover:before:translate-x-full"
-                        >
-                            <span className="relative z-10">Dashboard</span>
-                        </button>
-                    ) : (
-                        <>
-                            <button
-                                onClick={() => navigate("/login")}
-                                className="group relative px-6 py-3 border-2 border-indigo-600 text-indigo-600 rounded-lg 
-                             overflow-hidden transition-all duration-300 ease-out
-                             hover:bg-indigo-50 hover:border-indigo-700 hover:text-indigo-700 
-                             hover:shadow-lg hover:-translate-y-0.5 
-                             active:translate-y-0 active:transition-transform active:duration-75
-                             before:absolute before:inset-0 before:bg-gradient-to-r 
-                             before:from-transparent before:via-white/20 before:to-transparent
-                             before:-translate-x-full before:transition-transform before:duration-700
-                             hover:before:translate-x-full"
-                            >
-                                <span className="relative z-10">Login</span>
-                            </button>
-
-                            <button
-                                onClick={() => navigate("/signup")}
-                                className="group relative px-6 py-3 bg-gradient-to-r from-indigo-600 to-indigo-700 
-                             text-white rounded-lg overflow-hidden
-                             transition-all duration-300 ease-out
-                             hover:from-indigo-700 hover:to-indigo-800 
-                             hover:shadow-xl hover:shadow-indigo-500/25 hover:-translate-y-0.5
-                             active:translate-y-0 active:transition-transform active:duration-75
-                             before:absolute before:inset-0 before:bg-gradient-to-r 
-                             before:from-transparent before:via-white/20 before:to-transparent
-                             before:-translate-x-full before:transition-transform before:duration-700
-                             hover:before:translate-x-full"
-                            >
-                                <span className="relative z-10">Get Started</span>
-                            </button>
-                        </>
-                    )}
                 </div>
-            </nav>
+                <span className="text-3xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent transition-all duration-300 group-hover:tracking-wider">
+                    LevelUp
+                </span>
+            </div>
+
+            {/* --- Navigation Links & Actions --- */}
+            <div className="flex items-center space-x-6">
+                <ul className="hidden md:flex items-center space-x-8 text-gray-700 font-medium">
+                    {/* Standard Links with animated underline */}
+                    {['Features', 'How It Works', 'Why LevelUp?'].map((item) => (
+                        <li key={item}>
+                            <a
+                                href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
+                                onClick={(e) => { e.preventDefault(); scrollToSection(item.toLowerCase().replace(/\s+/g, '-')); }}
+                                className="relative py-1 transition-colors hover:text-indigo-600 after:absolute after:bottom-0 after:left-1/2 after:h-0.5 after:w-0 after:-translate-x-1/2 after:bg-indigo-600 after:transition-all after:duration-300 hover:after:w-full"
+                            >
+                                {item}
+                            </a>
+                        </li>
+                    ))}
+                    {/* Special @Community Link */}
+                    <li>
+                        <a
+                            href="https://chat.whatsapp.com/J4hU9HJOAWx54Iv8DBI685"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center space-x-2 px-4 py-2 bg-green-100 text-green-800 rounded-full font-semibold transition-all duration-300 hover:bg-green-200 hover:shadow-md hover:-translate-y-0.5 animate-pulse-slow"
+                        >
+                            <span>@Community</span>
+                        </a>
+                    </li>
+                </ul>
+
+                {/* Conditional Buttons */}
+                <div className="hidden lg:flex items-center space-x-4">
+                 {isLoggedIn ? (
+                     <button
+                         onClick={() => navigate("/dashboard")}
+                         className="group relative px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg overflow-hidden transition-all duration-300 ease-out hover:shadow-xl hover:shadow-indigo-500/30 hover:-translate-y-0.5"
+                     >
+                         <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+                         <span className="relative">Dashboard</span>
+                     </button>
+                 ) : (
+                     <>
+                         <button
+                            onClick={() => navigate("/login")}
+                            className="px-6 py-2.5 font-semibold text-indigo-600 bg-transparent border-2 border-indigo-600 rounded-lg 
+                                        transition-all duration-300 ease-out
+                                        hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-700 
+                                        hover:shadow-md hover:-translate-y-0.5
+                                        active:translate-y-0"
+                            >
+                            Login
+                            </button>
+
+                         <button
+                             onClick={() => navigate("/signup")}
+                             className="group relative px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg overflow-hidden transition-all duration-300 ease-out hover:shadow-xl hover:shadow-indigo-500/30 hover:-translate-y-0.5"
+                         >
+                            <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+                            <span className="relative">Get Started</span>
+                         </button>
+                     </>
+                 )}
+                </div>
+            </div>
+        </nav>
 
             {/* ====== Hero Section ======= */}
             <section className="min-h-screen flex flex-col lg:flex-row items-center justify-center gap-10 px-6 py-16 bg-gradient-to-br from-indigo-50 via-white to-teal-50">
