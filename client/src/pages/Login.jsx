@@ -60,6 +60,7 @@ function Login() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-white to-[#f1f5f9] text-gray-800">
+      
       <div className="bg-white border border-gray-200 p-8 rounded-2xl shadow-lg w-full max-w-md transition-all duration-500 ease-in-out hover:shadow-[0_0_30px_#c7d2fe]">
         <h2 className="text-3xl font-bold text-center mb-6 text-indigo-600">
           Welcome Back to <span className="text-indigo-700">LevelUp</span> 
