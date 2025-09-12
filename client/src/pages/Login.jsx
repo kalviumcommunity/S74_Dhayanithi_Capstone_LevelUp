@@ -1,9 +1,12 @@
 // src/pages/Login.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import axios from "../services/axios";
 import { useAuth } from "../context/authContext.jsx";
 import { EyeIcon, EyeOffIcon } from "lucide-react"; // make sure you have lucide-react or use any icon lib
+import "react-toastify/dist/ReactToastify.css";
+
 
 function Login() {
   const [identifier, setIdentifier] = useState("");
@@ -30,6 +33,24 @@ function Login() {
       );
 
       setUser(res.data.user);
+      toast.success(
+  <div>
+    Login Successful! 🎉 Would you like to join our community?
+    <a 
+      href="https://chat.whatsapp.com/J4hU9HJOAWx54Iv8DBI685" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="font-bold underline text-blue-600 hover:text-blue-800 ml-1"
+    >
+      Join on WhatsApp!
+    </a>
+  </div>,
+  {
+    // Optional: Make the toast stay longer so users have time to click
+    autoClose: 8000, 
+  }
+);
+      // toast.success("Login Successfull 🎉 Would you like to Join in our whatsapp Community https://chat.whatsapp.com/J4hU9HJOAWx54Iv8DBI685 ");
       navigate("/dashboard");
     } catch (err) {
       console.log(err);
