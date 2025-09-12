@@ -41,32 +41,45 @@ const TonyAI = ({ userHabits = [], userProgress = {} }) => {
   
   const apiKey = import.meta.env.VITE_OPENROUTER_API;
 
-  // ---- Helper to call OpenRouter ----
+
   const callTony = async (question) => {
     setLoading(true);
     try {
-      // Craft a more detailed prompt to make sure the AI uses the user data
-      const prompt = `
-        You are an AI named Tony, designed to help with habit tracking, and providing personalised tips for the user.
-        Here are the user's current habits: ${JSON.stringify(userHabits)}.
-        Here is the user's progress: ${JSON.stringify(userProgress)}.
-        User question: "${question}".
-        The one who created you is Dhayanithi, a passionate developer focused on habit tracking and self-improvement.
-        His portfolio is https://dhayanithi.vercel.app/, only give, if the user asks about the creator or owner, or developer of Tony.
-        Reply with short, friendly tips, using markdown for emphasis and actionable advice based on the provided data.
-      `;
+      
+      const systemMessage = `
+        You are Tony, an encouraging and insightful AI coach. Your primary goal is to help users build life-changing habits and achieve their goals.
+
+        Your personality is friendly, supportive, and knowledgeable. Keep your responses concise, actionable, and use markdown for clarity (like **bolding** key terms or using lists).
+
+        **Core Directives:**
+        1.  **Analyze Data:** Carefully analyze the user's habits and progress to provide personalized, data-driven advice.
+        2.  **Be Proactive:** Don't just answer the question. Suggest new habits that complement the user's existing ones and help them reach their goals faster.
+        3.  **Stay Focused:** Your conversation should always be about habit formation and self-improvement.
+
+        **IMPORTANT RULE:** You were created by a developer named Dhayanithi. **NEVER** mention his name or his portfolio unless the user explicitly asks who "created," "built," "developed," or "made" you. If they ask, and only if they ask, you will respond with: "I was created by Dhayanithi, a passionate developer. You can see his work at https://dhayanithi.vercel.app/"
+        `;
+
+        const userMessage = `
+        Here is my current data:
+        - **My Habits:** ${JSON.stringify(userHabits)}
+        - **My Progress:** ${JSON.stringify(userProgress)}
+
+        My question is: "${question}"`;
 
       const resp = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: {
+      method: "POST",
+      headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          model: "openai/gpt-3.5-turbo",
-          messages: [{ role: "user", content: prompt }],
-        }),
-      });
+      },
+      body: JSON.stringify({
+          model: "openai/gpt-4o", 
+          messages: [
+              { role: "system", content: systemMessage },
+              { role: "user", content: userMessage }
+          ],
+      }),
+});
 
       const data = await resp.json();
       const text = data.choices?.[0]?.message?.content || "No suggestions.";
