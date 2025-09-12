@@ -38,8 +38,8 @@ const TonyAI = ({ userHabits = [], userProgress = {} }) => {
   const dragRef = useRef(null);
   const messagesEndRef = useRef(null);
 
-  // The API key is hardcoded.
-  const apiKey = import.meta.env.OPENROUTER_API ||  "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" || "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";
+  
+  const apiKey = import.meta.env.VITE_OPENROUTER_API;
 
   // ---- Helper to call OpenRouter ----
   const callTony = async (question) => {
