@@ -125,7 +125,7 @@ const Profile = ({ user, habits = [] }) => {
     }
   };
 
-  // --- Handlers ---
+  
   const handleCancel = () => { setTempExtra(extra); setEditMode(false); };
   const handleEdit = () => { setTempExtra(extra); setEditMode(true); };
   const handleInputChange = (key, value) => setTempExtra(prev => ({ ...prev, [key]: value }));
@@ -134,7 +134,7 @@ const Profile = ({ user, habits = [] }) => {
       setIsAvatarModalOpen(false);
   }
 
-  // --- Loading/No User State ---
+  
   if (!user) {
     return (
       <div className="bg-slate-100 min-h-screen flex items-center justify-center">
@@ -146,7 +146,7 @@ const Profile = ({ user, habits = [] }) => {
     );
   }
 
-  // --- Habit Calculations ---
+  
   const totalHabits = habits.length;
   const completedHabits = habits.filter(h => h.completedToday);
   const completionPercentage = totalHabits > 0 ? (completedHabits.length / totalHabits) * 100 : 0;
