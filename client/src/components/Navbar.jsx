@@ -154,13 +154,7 @@ const Navbar = () => {
                     <HiOutlineUserCircle className="w-5 h-5" />
                     <span>View Profile</span>
                   </button>
-                  <button
-                    onClick={() => navigate("/settings")}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition flex items-center space-x-2"
-                  >
-                    <HiOutlineCog className="w-5 h-5" />
-                    <span>Settings</span>
-                  </button>
+                  
                 </div>
                 <div className="py-1 border-t border-gray-200">
                   <button
