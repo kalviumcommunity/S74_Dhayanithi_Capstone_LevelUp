@@ -57,11 +57,11 @@ const App = () => {
   return (
     <>
       <GlobalLoader />
-      {user && <Navbar />}
+      {location.pathname !== "/" && <Navbar />}
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage user={user} />} />
         <Route
           path="/dashboard"
           element={

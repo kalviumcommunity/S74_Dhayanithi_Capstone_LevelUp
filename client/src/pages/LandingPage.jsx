@@ -4,15 +4,20 @@ import levelupIcon from "../assets/levelup-icon.png";
 
 
 
-function LandingPage() {
-    // Replaced useNavigate with a simple function for single-file navigation
+
+function LandingPage({ user = [] }) {
+
     const navigate = (path) => {
         window.location.href = path;
     };
 
-    // A placeholder for checking if a user is logged in.
-    // In a real app, this would be a state or context variable checking for a JWT or similar token.
-    const isLoggedIn = localStorage.getItem("userToken") !== null;
+    const getCookie = (name) => {
+    const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
+    return match ? match[2] : null;
+};
+
+    // const isLoggedIn = getCookie("token") != null;
+    const isLoggedIn = user && user._id;
 
     const scrollToSection = (id) => {
         const section = document.getElementById(id);
@@ -23,9 +28,10 @@ function LandingPage() {
 
     return (
         <div className="bg-white text-gray-800">
-            {/* ====== Navbar ======= */}
+            
+            
             <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl shadow-sm px-6 py-4 flex items-center justify-between border-b border-white/20">
-            {/* --- Brand Logo Section --- */}
+            
             <div
                 className="flex items-center space-x-2 cursor-pointer group"
                 onClick={() => navigate("/")}
@@ -44,10 +50,10 @@ function LandingPage() {
                 </span>
             </div>
 
-            {/* --- Navigation Links & Actions --- */}
+            
             <div className="flex items-center space-x-6">
                 <ul className="hidden md:flex items-center space-x-8 text-gray-700 font-medium">
-                    {/* Standard Links with animated underline */}
+                    
                     {['Features', 'How It Works', 'Why LevelUp?'].map((item) => (
                         <li key={item}>
                             <a
@@ -59,7 +65,7 @@ function LandingPage() {
                             </a>
                         </li>
                     ))}
-                    {/* Special @Community Link */}
+                   
                     <li>
                         <a
                             href="https://chat.whatsapp.com/J4hU9HJOAWx54Iv8DBI685"
@@ -72,9 +78,8 @@ function LandingPage() {
                     </li>
                 </ul>
 
-                {/* Conditional Buttons */}
                 <div className="hidden lg:flex items-center space-x-4">
-                 {isLoggedIn ? (
+                 {user && user._id ? (
                      <button
                          onClick={() => navigate("/dashboard")}
                          className="group relative px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg overflow-hidden transition-all duration-300 ease-out hover:shadow-xl hover:shadow-indigo-500/30 hover:-translate-y-0.5"
@@ -108,7 +113,7 @@ function LandingPage() {
             </div>
         </nav>
 
-            {/* ====== Hero Section ======= */}
+             {/* // Hero Section  */}
             <section className="min-h-screen flex flex-col lg:flex-row items-center justify-center gap-10 px-6 py-16 bg-gradient-to-br from-indigo-50 via-white to-teal-50">
                 <div className="max-w-xl text-center lg:text-left">
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight">
