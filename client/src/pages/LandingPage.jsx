@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import { useState } from "react";
 import levelupIcon from "../assets/levelup-icon.png";
 import { TrendingUp,  Rocket,  Bot,
         CheckCircle2,  BrainCircuit, LayoutGrid, Flame, Laptop, Tablet, Smartphone, Globe, Download, ExternalLink, Heart,
@@ -23,6 +24,9 @@ function LandingPage({ user = [] }) {
 
     // const isLoggedIn = getCookie("token") != null;
     const isLoggedIn = user && user._id;
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+ 
 
     // Fix: Add scrollToSection function for smooth scrolling to sections
     const scrollToSection = (id) => {
@@ -30,6 +34,11 @@ function LandingPage({ user = [] }) {
       if (section) {
         section.scrollIntoView({ behavior: "smooth" });
       }
+      const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+            setIsMobileMenuOpen(false); // Close menu after clicking a link
+        }
     };
 
     const scrollToTop = () => {
@@ -38,85 +47,98 @@ function LandingPage({ user = [] }) {
     return (
         <div className="bg-white text-gray-800">
             
-            <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl shadow-sm px-6 py-4 flex items-center justify-between border-b border-white/20">
+            <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl shadow-sm px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between border-b border-white/20">
             
-            <div
-                className="flex items-center space-x-2 cursor-pointer group"
-                onClick={() => navigate("/")}
-            >
-                <div className="perspective-container">
-                    <div className="flipper">
-                        <img
-                            src={levelupIcon}
-                            alt="LevelUp"
-                            className="w-12 h-12"
-                        />
+            {/* Logo and Mobile Toggle */}
+            <div className="flex items-center justify-between w-full md:w-auto">
+                <div
+                    className="flex items-center space-x-2 cursor-pointer group"
+                    onClick={() => navigate("/")}
+                >
+                    <div className="perspective-container">
+                        <div className="flipper">
+                            <img
+                                src={levelupIcon}
+                                alt="LevelUp"
+                                className="w-12 h-12"
+                            />
+                        </div>
                     </div>
+                    <span className="text-3xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent transition-all duration-300 group-hover:tracking-wider">
+                        LevelUp
+                    </span>
                 </div>
-                <span className="text-3xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent transition-all duration-300 group-hover:tracking-wider">
-                    LevelUp
-                </span>
+
+                {/* Mobile Menu Button */}
+                <button
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    className="md:hidden text-gray-700 hover:text-indigo-600 focus:outline-none"
+                    aria-expanded={isMobileMenuOpen}
+                    aria-controls="mobile-menu"
+                >
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}></path>
+                    </svg>
+                </button>
             </div>
 
-            
-            <div className="flex items-center space-x-6">
-                <ul className="hidden md:flex items-center space-x-8 text-gray-700 font-medium">
-                    
+            {/* Desktop and Mobile Menu Container */}
+            <div
+                id="mobile-menu"
+                className={`md:flex flex-col md:flex-row md:items-center md:space-x-6 w-full md:w-auto mt-4 md:mt-0 ${isMobileMenuOpen ? 'block' : 'hidden'}`}
+            >
+                {/* Navigation Links */}
+                <ul className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8 text-gray-700 font-medium">
                     {['Features', 'How It Works', 'Why LevelUp'].map((item) => (
-                        <li key={item}>
+                        <li key={item} className="w-full md:w-auto text-center">
                             <a
                                 href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
                                 onClick={(e) => { e.preventDefault(); scrollToSection(item.toLowerCase().replace(/\s+/g, '-')); }}
-                                className="relative py-1 transition-colors hover:text-indigo-600 after:absolute after:bottom-0 after:left-1/2 after:h-0.5 after:w-0 after:-translate-x-1/2 after:bg-indigo-600 after:transition-all after:duration-300 hover:after:w-full"
+                                className="relative py-1 block transition-colors hover:text-indigo-600 after:absolute after:bottom-0 after:left-1/2 after:h-0.5 after:w-0 after:-translate-x-1/2 after:bg-indigo-600 after:transition-all after:duration-300 hover:after:w-full"
                             >
                                 {item}
                             </a>
                         </li>
                     ))}
-                   
-                    <li>
+                    <li className="w-full md:w-auto text-center">
                         <a
                             href="https://chat.whatsapp.com/J4hU9HJOAWx54Iv8DBI685"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center space-x-2 px-4 py-2 bg-green-100 text-green-800 rounded-full font-semibold transition-all duration-300 hover:bg-green-200 hover:shadow-md hover:-translate-y-0.5 animate-pulse-slow"
+                            className="flex items-center justify-center space-x-2 px-4 py-2 bg-green-100 text-green-800 rounded-full font-semibold transition-all duration-300 hover:bg-green-200 hover:shadow-md hover:-translate-y-0.5 animate-pulse-slow"
                         >
                             <span>@Community</span>
                         </a>
                     </li>
                 </ul>
 
-                <div className="hidden lg:flex items-center space-x-4">
-                 {user && user._id ? (
-                     <button
-                         onClick={() => navigate("/dashboard")}
-                         className="group relative px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg overflow-hidden transition-all duration-300 ease-out hover:shadow-xl hover:shadow-indigo-500/30 hover:-translate-y-0.5"
-                     >
-                         <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
-                         <span className="relative">Dashboard</span>
-                     </button>
-                 ) : (
-                     <>
-                         <button
-                            onClick={() => navigate("/login")}
-                            className="px-6 py-2.5 font-semibold text-indigo-600 bg-transparent border-2 border-indigo-600 rounded-lg 
-                                        transition-all duration-300 ease-out
-                                        hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-700 
-                                        hover:shadow-md hover:-translate-y-0.5
-                                        active:translate-y-0"
-                            >
-                            Login
-                            </button>
-
-                         <button
-                             onClick={() => navigate("/signup")}
-                             className="group relative px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg overflow-hidden transition-all duration-300 ease-out hover:shadow-xl hover:shadow-indigo-500/30 hover:-translate-y-0.5"
-                         >
+                {/* Login/Signup/Dashboard Buttons */}
+                <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 w-full md:w-auto mt-4 md:mt-0">
+                    {user && user._id ? (
+                        <button
+                            onClick={() => navigate("/dashboard")}
+                            className="group relative px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg overflow-hidden transition-all duration-300 ease-out hover:shadow-xl hover:shadow-indigo-500/30 hover:-translate-y-0.5 w-full"
+                        >
                             <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
-                            <span className="relative">Get Started</span>
-                         </button>
-                     </>
-                 )}
+                            <span className="relative">Dashboard</span>
+                        </button>
+                    ) : (
+                        <>
+                            <button
+                                onClick={() => navigate("/login")}
+                                className="px-6 py-2.5 font-semibold text-indigo-600 bg-transparent border-2 border-indigo-600 rounded-lg transition-all duration-300 ease-out hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-700 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 w-full"
+                            >
+                                Login
+                            </button>
+                            <button
+                                onClick={() => navigate("/signup")}
+                                className="group relative px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg overflow-hidden transition-all duration-300 ease-out hover:shadow-xl hover:shadow-indigo-500/30 hover:-translate-y-0.5 w-full"
+                            >
+                                <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+                                <span className="relative">Get Started</span>
+                            </button>
+                        </>
+                    )}
                 </div>
             </div>
         </nav>
@@ -713,7 +735,7 @@ function LandingPage({ user = [] }) {
           <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
             Join the Movement
           </h2>
-              
+
           <p className="text-xl mb-10 max-w-2xl mx-auto leading-relaxed text-indigo-100">
             People are already transforming their lives with LevelUp. 
             <span className="block mt-2 text-white font-semibold">Are you ready to level up too?</span>
