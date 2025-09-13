@@ -3,7 +3,7 @@ import React from "react";
 import levelupIcon from "../assets/levelup-icon.png";
 import { TrendingUp,  Rocket,  Bot,
         CheckCircle2,  BrainCircuit, LayoutGrid, Flame, Laptop, Tablet, Smartphone, Globe, Download, ExternalLink, Heart,
-        ArrowUp,  FileText, BookOpen, Linkedin, Github,Twitter, Instagram,   Target,   Lightbulb,
+        ArrowUp,  FileText, BookOpen, Linkedin, Github,Twitter, Instagram, Target,   Lightbulb,
           ArrowRight, Play, Sparkles, Award, Users, BarChart3, Shield, Zap, Star, ChevronRight
 
  } from 'lucide-react';
@@ -23,6 +23,14 @@ function LandingPage({ user = [] }) {
 
     // const isLoggedIn = getCookie("token") != null;
     const isLoggedIn = user && user._id;
+
+    // Fix: Add scrollToSection function for smooth scrolling to sections
+    const scrollToSection = (id) => {
+      const section = document.getElementById(id);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+    };
 
     const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -54,7 +62,7 @@ function LandingPage({ user = [] }) {
             <div className="flex items-center space-x-6">
                 <ul className="hidden md:flex items-center space-x-8 text-gray-700 font-medium">
                     
-                    {['Features', 'How It Works', 'Why LevelUp?'].map((item) => (
+                    {['Features', 'How It Works', 'Why LevelUp'].map((item) => (
                         <li key={item}>
                             <a
                                 href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
@@ -509,7 +517,7 @@ function LandingPage({ user = [] }) {
                   </p>
                   <div className="grid grid-cols-2 gap-4 text-center">
                     <div>
-                      <div className="text-3xl font-bold text-indigo-600">30+</div>
+                      <div className="text-3xl font-bold text-indigo-600">80+</div>
                       <div className="text-sm text-gray-600">Active Users</div>
                     </div>
                     <div>
@@ -694,34 +702,48 @@ function LandingPage({ user = [] }) {
         </div>
         
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold mb-8">
+          <div
+          className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold mb-8 cursor-pointer"
+          onClick={() => window.open('https://chat.whatsapp.com/J4hU9HJOAWx54Iv8DBI685', '_blank')}>
             <Heart className="w-4 h-4 text-pink-300" />
             Join Our Community
           </div>
+
           
           <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
             Join the Movement
           </h2>
-          
+              
           <p className="text-xl mb-10 max-w-2xl mx-auto leading-relaxed text-indigo-100">
-            Thousands are already transforming their lives with LevelUp. 
+            People are already transforming their lives with LevelUp. 
             <span className="block mt-2 text-white font-semibold">Are you ready to level up too?</span>
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <button
               onClick={() => navigate("/signup")}
-              className="group bg-white text-indigo-600 hover:bg-gray-50 px-10 py-4 rounded-2xl text-lg font-bold transition-all duration-300 shadow-2xl hover:shadow-white/25 hover:scale-105 flex items-center gap-3"
-            >
-              Get Started – It's Free
+              className="group bg-white text-indigo-600 hover:bg-gray-50 px-10 py-4 rounded-2xl text-lg font-bold transition-all duration-300 shadow-2xl hover:shadow-white/25 hover:scale-105 flex items-center gap-3">
+              Get Started
               <ExternalLink className="w-5 h-5 group-hover:rotate-45 transition-transform duration-300" />
             </button>
+            <button
+              type="button"
+              onClick={() => window.open("https://chat.whatsapp.com/J4hU9HJOAWx54Iv8DBI685", "_blank")}
+              className="flex items-center space-x-2 px-4 py-2 bg-green-100 text-green-800 rounded-full font-semibold transition-all duration-300 hover:bg-green-200 hover:shadow-md hover:-translate-y-0.5 animate-pulse-slow cursor-pointer">
             
+              <span>@Community</span>
+            </button>
+
             <div className="flex items-center gap-2 text-indigo-200">
               <div className="flex -space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-pink-400 to-red-500 rounded-full border-2 border-white"></div>
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-full border-2 border-white"></div>
-                <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-teal-500 rounded-full border-2 border-white"></div>
+                {/* <div className="flex flex-col sm:flex-row items-start sm:items-center justify-start gap-6 text-sm text-gray-600"> */}
+            
+              <div className="flex -space-x-3">
+                <img className="w-9 h-9 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/40?img=1" alt="User avatar 1" />
+                <img className="w-9 h-9 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/40?img=2" alt="User avatar 2" />
+                <img className="w-9 h-9 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/40?img=3" alt="User avatar 3" />
+                <img className="w-9 h-9 rounded-full border-2 border-white shadow-sm" src="https://i.pravatar.cc/40?img=4" alt="User avatar 4" />
+              </div>
               </div>
               <span className="text-sm">80+ happy users</span>
             </div>
